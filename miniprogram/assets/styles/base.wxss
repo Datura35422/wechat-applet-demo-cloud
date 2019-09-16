@@ -1,0 +1,77 @@
+page {
+  font-size: 32rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+  background-color: #F8F8F8;
+}
+
+checkbox, radio{
+  margin-right: 10rpx;
+}
+/* button{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+} */
+
+/* button{
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  overflow: visible;
+}
+
+button::after {
+  border: none;
+} */
+
+form{
+  width: 100%;
+}
+
+/* lib */
+.strong{
+  font-weight: bold;
+}
+.tc{
+  text-align: center;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.break {
+  word-break: break-all;
+}
+
+/* button */
+.btn-add {
+  position: fixed;
+  left: 50%;
+  bottom: 60rpx;
+  width: 90rpx;
+  height: 90rpx;
+  margin-left: -45rpx;
+  border-radius: 50%;
+  font-size: 60rpx;
+  line-height: 90rpx;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  color: #444;
+}
+
+.btn-save {
+  margin: 60rpx auto;
+  width: 500rpx;
+  color: #fff;
+  background-color: #E46C78;
+}
+
+/* page */
+.container {
+  display: flex;
+  flex-direction: column;
+}

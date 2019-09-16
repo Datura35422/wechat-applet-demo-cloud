@@ -1,0 +1,16 @@
+<view class="page">
+  <view
+    wx:for="{{ todos }}"
+    wx:key="{{ item.uuid }}"
+    class="ripple fast fadeInRight todo-item"
+    style="animation-delay: {{ delay ? index * 0.1 : 0 }}s">
+    <todo-card
+      todo="{{ item }}"
+      index="{{ index }}"
+      data-uuid="{{ item.uuid }}" />
+  </view>
+  <view class="ripple bounceIn" wx:if="{{ !todos.length }}">
+    <tips-info text="{{tips.empty}}"></tips-info>
+  </view>
+  <view class="btn-add" bindtap="handleAddTodo">+</view>
+</view>

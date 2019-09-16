@@ -1,0 +1,19 @@
+<view class="todo-card" bindtap="onDetail">
+  <view class="todo-card__detail">
+    <view class="todo-card__datetime">
+      <view class="todo-card__date">
+        {{todo.period !== 1 ? todo.beginDate + ' - ' + todo.finishDate : todo.beginDate}}
+      </view>
+      <view>
+        {{todo.beginTime + ' - ' + todo.finishTime}}
+      </view>
+    </view>
+    <view class="todo-card__categorie">
+      {{categorie}}
+    </view>
+  </view>
+  <view class="todo-card__item">
+    <image class="icon-check" src="{{todo.completed ? '/assets/icons/checked.png' : '/assets/icons/play.png'}}" catchtap="onCheck"></image>
+    <view class="todo-card__content">{{todo.content}}</view>
+  </view>
+</view>

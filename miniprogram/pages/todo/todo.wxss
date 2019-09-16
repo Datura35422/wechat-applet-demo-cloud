@@ -1,0 +1,39 @@
+.form-item {
+  margin: 0 24rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title {
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  color: #b2b2b2;
+}
+
+.item-content {
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item-picker, .item-textarea {
+  flex: 1;
+  height: 100%;
+  padding: 0 16rpx;
+  background-color: #ddd;
+  border-radius: 10rpx;
+  box-sizing: border-box;
+}
+
+.item-textarea {
+  padding: 16rpx;
+  width: 100%;
+  height: 300rpx;
+}
+
+.item-split {
+  width: 40rpx;
+  text-align: center;
+}

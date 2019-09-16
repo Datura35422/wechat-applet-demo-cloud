@@ -1,0 +1,5 @@
+<view class="tips-info">
+  <text class="tips-info__text">
+    {{ text }}
+  </text>
+</view>

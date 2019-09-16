@@ -1,0 +1,109 @@
+<view class="container">
+  <form class="todo-form" report-submit bindsubmit="onSubmit">
+    <view class="form-item">
+      <view class="item-title">类别</view>
+      <view class="item-content">
+        <picker 
+          class="item-picker" 
+          range="{{categories}}" 
+          range-key="categorieName" 
+          data-type="categorie"
+          bindchange="onPickerChange"
+        >
+          {{categories[selectedCategorie].categorieName}}
+        </picker>
+      </view>
+    </view>
+    <view class="form-item">
+      <view class="item-title">待办周期</view>
+      <view class="item-content">
+        <picker 
+          class="item-picker" 
+          range="{{periods}}" 
+          range-key="periodName" 
+          data-type="period"
+          bindchange="onPickerChange"
+        >
+          {{periods[selectedPeriod].periodName}}
+        </picker>
+      </view>
+    </view>
+    <view class="form-item">
+      <view class="item-title">紧急程度</view>
+      <view class="item-content">
+        <picker 
+          class="item-picker" 
+          range="{{levels}}" 
+          range-key="levelName" 
+          data-type="level"
+          bindchange="onPickerChange"
+        >
+          {{levels[selectedLevel].levelName}}
+        </picker>
+      </view>
+    </view>
+    <view class="form-item">
+      <view class="item-title">{{form.period !== periods[0].period ? '开始日期 - 结束日期' : '日期'}}</view>
+      <view class="item-content">
+        <picker
+          class="item-picker" 
+          mode="date" 
+          value="{{form.beginDate}}" 
+          start="{{beginDateStart}}" 
+          end="{{beginDateEnd}}" 
+          data-type="beginDate"
+          bindchange="onPickerChange"
+        >
+          {{form.beginDate}}
+        </picker>
+        <block wx:if="{{form.period !== periods[0].period }}">
+          <view class="item-split">-</view>
+          <picker 
+            class="item-picker" 
+            mode="date" 
+            value="{{form.finishDate}}" 
+            start="{{finishDateStart}}" 
+            end="{{finishDateEnd}}" 
+            data-type="finishDate"
+            bindchange="onPickerChange"
+          >
+            {{form.finishDate}}
+          </picker>
+        </block>
+      </view>
+    </view>
+    <view class="form-item">
+      <view class="item-title">开始时间 - 结束时间</view>
+      <view class="item-content">
+        <picker 
+          class="item-picker" 
+          mode="time" 
+          value="{{form.beginTime}}" 
+          start="{{beignTimeStart}}" 
+          end="{{beignTimeEnd}}" 
+          data-type="beignTime"
+          bindchange="onPickerChange"
+        >
+          {{form.beginTime}}
+        </picker>
+        <view class="item-split">-</view>
+        <picker 
+          class="item-picker" 
+          mode="time" 
+          value="{{form.finishTime}}" 
+          start="{{finishTimeStart}}" 
+          end="{{finishTimeEnd}}" 
+          data-type="finishTime"
+          bindchange="onPickerChange"
+        >
+          {{form.finishTime}}
+        </picker>
+      </view>
+    </view>
+    <view class="form-item">
+      <view class="item-title">待办内容</view>
+      <textarea class="item-textarea" bindinput="onInputContent"></textarea>
+    </view>
+    <button class="btn-save" form-type="submit">保存</button>
+  </form>
+</view>
