@@ -32,7 +32,6 @@ const formatNumber = n => {
 const uuid = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
     let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8) // 0x3为16进制的3
-    console.log('uuid', r, v)
     return v.toString(16)
   })
 }
@@ -130,8 +129,9 @@ const byteToString = arr => {
 
 module.exports = {
   formatDateTime,
-  uuid,
   formatTime,
+  formatNumber,
+  uuid,
   findIndexById,
   getDate,
   getTime,

@@ -24,7 +24,7 @@
 }
 
 .todo-card__categorie {
-  color: #5B9064;
+  color: #9DD1BE;
 }
 
 .icon-check {
@@ -40,7 +40,7 @@
   flex-direction: row;
   align-items: center;
   background-color: #fff;
-  box-shadow: 0 10rpx 10rpx rgba(91, 144, 100, .4);
+  box-shadow: 0 10rpx 10rpx rgba(157, 209, 190, .4);
   border-radius: 10rpx;
 }
 

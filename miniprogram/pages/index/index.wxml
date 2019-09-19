@@ -3,17 +3,9 @@
 
   <!-- 用户 openid -->
   <view class="userinfo">
-    <button 
-      open-type="getUserInfo" 
-      bindgetuserinfo="onGetUserInfo"
-      class="userinfo-avatar"
-      style="background-image: url({{avatarUrl}})"
-    ></button>
-    <view>
-      <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
-    </view>
+    <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
+    <view>{{openid ? 'openid:' + openid : '未登录'}}</view>
   </view>
-
 
   <!-- 上传图片 -->
   <view class="uploader">
@@ -46,6 +38,5 @@
       <text>云调用</text>
     </navigator>
   </view>
-
-
+  <button wx:if="{{ !openid }}" class="btn-red" bindtap="onGetOpenid">登录</button>
 </view>

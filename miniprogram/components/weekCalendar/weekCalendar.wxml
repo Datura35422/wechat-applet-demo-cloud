@@ -1,0 +1,18 @@
+<view class="calendar-week">
+  <view class="calendar-week__weeks">
+    <view wx:for="{{ weeksTitle }}" wx:key="{{ index }}" class="calendar-week__week">{{ item }}</view>
+  </view>
+  <swiper class="calendar-week__weeks" current="{{currentItem}}" bindchange="onChange">
+    <swiper-item wx:for="{{ weeks }}" wx:key="{{ index }}" class="calendar-week__weeks">
+      <view 
+        wx:for="{{ item }}" 
+        wx:for-item="week"
+        wx:key="{{ week.day }}"
+        class="calendar-week__day {{ week.selected ? 'selected' : '' }}" 
+        data-index="{{ week.index }}" 
+        catchtap="selectDay"
+      >{{ week.day }}</view>
+    </swiper-item>
+  </swiper>
+</view>
+

@@ -1,17 +1,14 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/userConsole/userConsole",
-    "pages/storageConsole/storageConsole",
-    "pages/databaseGuide/databaseGuide",
-    "pages/addFunction/addFunction",
-    "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
-    "pages/openapi/openapi",
     "pages/todo/todo",
     "pages/noteList/noteList",
-    "pages/todoList/todoList",
-    "pages/note/note"
+    "pages/todoDay/todoDay",
+    "pages/note/note",
+    "pages/todoType/todoType",
+    "pages/todoMonth/todoMonth",
+    "pages/todoWeek/todoWeek"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -22,7 +19,7 @@
   },
   "tabBar": {
     "color": "#BBBBBB",
-    "selectedColor": "#F043FF",
+    "selectedColor": "#DF7F7C",
     "backgroundColor": "#F4F4F4",
     "borderStyle": "black",
     "list": [
@@ -31,7 +28,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/todoList/todoList",
+        "pagePath": "pages/todoType/todoType",
         "text": "TODO"
       },
       {

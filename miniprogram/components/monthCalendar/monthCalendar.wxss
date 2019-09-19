@@ -1,0 +1,82 @@
+.calendar-month {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-month__opt {
+  height: 64rpx;
+  line-height: 64rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.icon-opt {
+  flex-shrink: 0;
+  margin: 0 10rpx;
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.calendar-month__title {
+  flex: 1;
+  text-align: center;
+}
+
+.calendar-month__week {
+  padding-left: 2rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.calendar-month__weekday, .calendar-month__item {
+  margin-right: 4rpx;
+  width: 100rpx;
+  font-size: 32rpx;
+}
+
+.calendar-month__weekday {
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+}
+
+.calendar-month__weeks {
+  height: 460rpx;
+}
+
+.calendar-month__item {
+  height: 80rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-month__day {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+}
+
+.disabled {
+  /* color: #b2b2b2; */
+  opacity: .5;
+}
+
+.selected {
+  color: #fff;
+  border-radius: 50%;
+  background-color: #F3C35D;
+}
+
+.icon-dot {
+  margin-top: 8rpx;
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background-color: #F3C35D;
+}

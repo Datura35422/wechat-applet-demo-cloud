@@ -1,0 +1,4 @@
+# 添加新的gitignore
+.idea
+.vscode
+node_modules

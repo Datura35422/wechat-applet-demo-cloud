@@ -18,7 +18,7 @@ const showModal = ({ title, content, confirmText = '确定', success, fail }) =>
     title: title,
     content: content,
     confirmText: confirmText,
-    confirmColor: '#752bff',
+    confirmColor: '#E46C78',
     success(res) {
       if (res.confirm) {
         success && success.confirm && success.confirm()
@@ -29,8 +29,24 @@ const showModal = ({ title, content, confirmText = '确定', success, fail }) =>
   })
 }
 
+const setStore = (key, data) => {
+  wx.setStorage({
+    key: key,
+    data: data,
+    success(res) { },
+    fail(res) { },
+    complete(res) { },
+  })
+}
+
+const getStoreSync = (key) => {
+  return wx.getStorageSync(key)
+}
+
 
 export default {
   showToast,
-  showModal
+  showModal,
+  setStore,
+  getStoreSync
 }

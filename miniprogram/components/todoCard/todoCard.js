@@ -4,10 +4,6 @@ import common from '../../utils/common.js'
 
 Component({
   properties: {
-    index: {
-      type: Number,
-      value: 0
-    },
     todo: {
       type: Todo,
       value: {}
@@ -49,7 +45,7 @@ Component({
         success: res => {
           common.showToast({ title: '不错呦~', icon: 'success' })
           console.log(res)
-          this.triggerEvent('update', { index: this.data.index })
+          this.triggerEvent('update', { id: this.data.todo._id, opt: 'finished' })
         },
         fail: err => {
           common.showToast({ title: '更新数据失败' })

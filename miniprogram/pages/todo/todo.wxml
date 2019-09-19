@@ -102,8 +102,8 @@
     </view>
     <view class="form-item">
       <view class="item-title">待办内容</view>
-      <textarea class="item-textarea" bindinput="onInputContent"></textarea>
+      <textarea class="item-textarea" value="{{form.content}}" bindinput="onInputContent"></textarea>
     </view>
-    <button class="btn-save" form-type="submit">保存</button>
+    <button class="btn-red" form-type="submit">保存</button>
   </form>
 </view>

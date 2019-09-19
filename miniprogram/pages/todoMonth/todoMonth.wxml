@@ -1,0 +1,20 @@
+<view class="page">
+  <month-calendar bindupdate="onUpdate"/>
+  <view
+    wx:for="{{ todos }}"
+    wx:key="{{ item.uuid }}"
+    class="ripple fast fadeInRight todo-item"
+    style="animation-delay: {{ delay ? index * 0.1 : 0 }}s"
+    data-id="{{ item._id }}" 
+    bindlongpress="onRemove"
+  >
+    <todo-card
+      todo="{{ item }}"
+      bindupdate="onUpdate"
+    />
+  </view>
+  <view class="ripple bounceIn" wx:if="{{ !todos.length }}">
+    <tips-info text="{{tips.empty}}"></tips-info>
+  </view>
+  <view class="btn-add" bindtap="handleAddTodo">+</view>
+</view>

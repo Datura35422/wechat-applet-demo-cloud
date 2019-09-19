@@ -1,4 +1,5 @@
-//app.js
+import common from './utils/common.js'
+
 App({
   onLaunch: function () {
     if (!wx.cloud) {
@@ -7,6 +8,7 @@ App({
       wx.cloud.init({
         traceUser: true,
       })
+      this.globalData.openid = common.getStoreSync('openid')
     }
   },
 

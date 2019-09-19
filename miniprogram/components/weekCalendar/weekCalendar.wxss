@@ -1,0 +1,32 @@
+.calendar-week {
+  height: 160rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-week__weeks {
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+
+.calendar-week__week {
+  height: 100%;
+  width: 80rpx;
+}
+
+.calendar-week__day {
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.selected {
+  color: #fff;
+  background-color: #9DD1BE;
+  border-radius: 50%;
+}

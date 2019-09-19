@@ -12,4 +12,9 @@ Page({
 
   },
 
+  handleAddNote() {
+    wx.navigateTo({
+      url: '/pages/note/note',
+    })
+  }
 })

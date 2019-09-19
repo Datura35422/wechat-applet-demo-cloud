@@ -1,0 +1,27 @@
+<view class="calendar-month">
+  <view class="calendar-month__opt">
+    <!-- <image class="icon-opt" src="/assets/icons/before.png"></image>
+    <image class="icon-opt" src="/assets/icons/back.png"></image> -->
+    <view class="calendar-month__title">{{currentDate}}</view>
+    <!-- <image class="icon-opt" src="/assets/icons/forward.png"></image>
+    <image class="icon-opt" src="/assets/icons/next.png"></image> -->
+  </view>
+  <view class="calendar-month__gird">
+    <view class="calendar-month__week">
+      <view class="calendar-month__weekday" wx:for="{{weeksTitle}}" wx:key="*this">{{item}}</view>
+    </view>
+    <swiper class="calendar-month__weeks" current="{{currentItem}}" bindchange="onChange">
+      <swiper-item wx:for="{{ months }}" wx:key="{{ index }}" class="calendar-month__week">
+        <view 
+          wx:for="{{ item }}" 
+          wx:for-item="month"
+          wx:key="{{ month.day }}"
+          class="calendar-month__item" 
+        >
+          <view class="calendar-month__day {{month.className}}">{{ month.day }}</view>
+          <view wx:if="{{ month.hasTodo }}" class="icon-dot"></view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>

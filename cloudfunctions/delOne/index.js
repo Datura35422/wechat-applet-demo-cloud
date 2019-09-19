@@ -4,11 +4,9 @@ cloud.init()
 
 const db = cloud.database()
 exports.main = async (event, context) => {
-  const { table, data, userInfo } = event
+  const { table, id } = event
   try {
-    return await db.collection(table).add({
-      data: Object.assign({ ...data }, { _openid: userInfo.openId })
-    })
+    return await db.collection(table).doc(id).remove()
   } catch (e) {
     console.error(e)
   }

@@ -19,10 +19,19 @@ checkbox, radio{
   background-color: transparent;
   overflow: visible;
 }
+ */
 
-button::after {
+button {
+  background: initial;
+}
+
+button:focus{
+  outline: 0;
+}
+
+button::after{
   border: none;
-} */
+}
 
 form{
   width: 100%;
@@ -60,18 +69,21 @@ form{
   text-align: center;
   background-color: #fff;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-  color: #444;
+  color: #333;
 }
 
-.btn-save {
+.btn-red {
   margin: 60rpx auto;
   width: 500rpx;
   color: #fff;
-  background-color: #E46C78;
+  background-color: #DF7F7C;
 }
 
 /* page */
 .container {
   display: flex;
   flex-direction: column;
-}
+  align-items: center;
+  box-sizing: border-box;
+} 
+
