@@ -2,6 +2,10 @@ import Todo from '../../models/todo'
 import util from '../../utils/util.js'
 import common from '../../utils/common.js'
 
+let customData = {
+  isLock: false
+}
+
 Component({
   properties: {
     todo: {
@@ -12,9 +16,11 @@ Component({
 
   observers: {
     'todo': function(todo) {
-      Object.keys(todo).length > 0 && this.setData({
-        categorie: Todo.categories.fliter(item => item.id === todo.categorie)[0].categorieName
-      })
+      if (Object.keys(todo).length > 0) {
+        this.setData({
+          categorie: Todo.categories.filter(item => item.categorie === todo.categorie)[0].categorieName
+        })
+      }
     }
   },
 
@@ -52,6 +58,38 @@ Component({
           console.error('[云函数] [updateOne] 调用失败：', err)
         }
       })
-    }
+    },
+    onRemove(e) {
+      if (customData.isLock) return
+      const _this = this
+      const { _id } = this.data.todo
+      common.showModal({
+        title: '提示',
+        content: '确认删除这条消息？',
+        success: {
+          confirm() {
+            _this.onDelTodo(_id)
+          }
+        }
+      })
+    },
+    onDelTodo(id) {
+      wx.cloud.callFunction({
+        name: 'delOne',
+        data: {
+          table: 'todos',
+          id
+        },
+        success: res => {
+          common.showToast({ title: '删除数据成功', icon: 'success' })
+          this.triggerEvent('update', { id: this.data.todo._id, opt: 'remove' })
+          customData.isLock = false
+        },
+        fail: err => {
+          common.showToast({ title: '删除数据失败' })
+          console.error('[云函数] [delOne] 调用失败：', err)
+        }
+      })
+    },
   }
 })

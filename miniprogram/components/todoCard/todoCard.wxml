@@ -1,4 +1,4 @@
-<view class="todo-card" bindtap="onDetail">
+<view class="todo-card" catchtap="onDetail" catchlongpress="onRemove">
   <view class="todo-card__detail">
     <view class="todo-card__datetime">
       <view class="todo-card__date">

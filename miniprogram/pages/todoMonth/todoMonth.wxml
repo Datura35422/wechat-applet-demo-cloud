@@ -5,8 +5,6 @@
     wx:key="{{ item.uuid }}"
     class="ripple fast fadeInRight todo-item"
     style="animation-delay: {{ delay ? index * 0.1 : 0 }}s"
-    data-id="{{ item._id }}" 
-    bindlongpress="onRemove"
   >
     <todo-card
       todo="{{ item }}"

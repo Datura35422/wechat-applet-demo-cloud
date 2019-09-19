@@ -86,10 +86,9 @@ Page({
   },
 
   onUpdate(e) {
-    const opt = e.detail.opt
+    const { opt, id } = e.detail
     switch (opt) {
       case 'finished':
-        const id = e.detail.id
         this.data.todos.map(item => {
           if (item._id === id) {
             item.completed = true
@@ -97,6 +96,11 @@ Page({
         })
         this.setData({
           todos: this.data.todos
+        })
+        break
+      case 'remove':
+        this.setData({
+          todos: this.data.todos.filter(item => item._id !== id)
         })
         break
       case 'switch':
@@ -110,45 +114,9 @@ Page({
         break
     }
   },
-
   handleAddTodo() {
     wx.navigateTo({
       url: '/pages/todo/todo'
-    })
-  },
-
-  onRemove(e) {
-    if (this.customData.isLock) return
-    const _this = this
-    const { id } = e.currentTarget.dataset
-    common.showModal({
-      title: '提示',
-      content: '确认删除这条消息？',
-      success: {
-        confirm() {
-          _this.onDelTodo(id)
-        }
-      }
-    })
-  },
-  onDelTodo(id) {
-    wx.cloud.callFunction({
-      name: 'delOne',
-      data: {
-        table: 'todos',
-        id
-      },
-      success: res => {
-        common.showToast({ title: '删除数据成功', icon: 'success' })
-        this.setData({
-          todos: this.data.todos.filter(item => item._id !== id)
-        })
-        this.customData.isLock = false
-      },
-      fail: err => {
-        common.showToast({ title: '删除数据失败' })
-        console.error('[云函数] [delOne] 调用失败：', err)
-      }
     })
   },
   setTitle(title) {

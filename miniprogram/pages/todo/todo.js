@@ -19,7 +19,13 @@ Page({
   },
 
   onLoad(option) {
-    option && option.id && this.getOne(option.id)
+    if (option) {
+      option.id && this.getOne(option.id)
+      option.period && this.setData({
+        selectedPeriod: option.period - 1,
+        [`form.period`]: option.period
+      })
+    }
   },
 
   onPickerChange(e) {
@@ -101,8 +107,12 @@ Page({
         id: id
       },
       success: res => {
+        const data = res.result.data
         this.setData({
-          form: res.result.data
+          selectedPeriod: data.period - 1,
+          selectedLevel: data.level - 1,
+          selectedCategorie: data.categorie - 1,
+          form: data
         })
         Object.assign(this.customData, {
           type: 'edit',

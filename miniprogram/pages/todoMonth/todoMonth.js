@@ -24,7 +24,6 @@ Page({
   },
 
   onShow() {
-    // this.onQuery()
     const date = new Date()
     const beginDate = new Date(new Date().setDate(1))
     const endDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
@@ -32,8 +31,23 @@ Page({
   },
 
   onUpdate(e) {
-    const { opt } = e.detail
+    const { opt, id } = e.detail
     switch (opt) {
+      case 'finished':
+        this.data.todos.map(item => {
+          if (item._id === id) {
+            item.completed = true
+          }
+        })
+        this.setData({
+          todos: this.data.todos
+        })
+        break
+      case 'remove':
+        this.setData({
+          todos: this.data.todos.filter(item => item._id !== id)
+        })
+        break
       case 'switch':
         const { date } = e.detail
         break
@@ -84,4 +98,9 @@ Page({
       }
     })
   },
+  handleAddTodo() {
+    wx.navigateTo({
+      url: '/pages/todo/todo?period=3'
+    })
+  }
 })
