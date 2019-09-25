@@ -63,13 +63,13 @@ form{
   width: 90rpx;
   height: 90rpx;
   margin-left: -45rpx;
-  border-radius: 50%;
-  font-size: 60rpx;
   line-height: 90rpx;
+  font-size: 60rpx;
   text-align: center;
   background-color: #fff;
+  border-radius: 50%;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-  color: #333;
+  color: #666;
 }
 
 .btn-red {
@@ -86,4 +86,20 @@ form{
   align-items: center;
   box-sizing: border-box;
 } 
+
+.year {
+  background: #DF7F7C; 
+}
+
+.month {
+  background: #F3C35D;
+}
+
+.week {
+  background: #9DD1BE;
+}
+
+.day {
+  background: #7E8EE3;
+}
 

@@ -27,7 +27,7 @@ const categories = [
  * Todo 模型类
  */
 class Todo extends Model {
-  constructor(model) {
+  constructor() {
     super()
     Object.assign(this, {
       categorie: categories[0].categorie,
@@ -43,18 +43,68 @@ class Todo extends Model {
       completedAt: 0,
       createdAt: new Date().getTime(),
       isContinuous: false // 默认todo为不持续的
-    }, model)
+    })
+  }
 
-    // 日期格式化
-    // if (this.date.constructor === Date) {
-    //   this.date = util.formatDateTime(this.date)
-    // }
-    // if (this.createdAt.constructor === Date) {
-    //   this.createdAt = util.formatDateTime(this.createdAt)
-    // }
-    // if (this.completedAt.constructor === Date) {
-    //   this.completedAt = util.formatDateTime(this.completedAt)
-    // }
+  getTodoDetail(id, data = {}) {
+    return this.callFunction(Object.assign({
+      name: 'findOne',
+      data: {
+        table: 'todos',
+        id: id
+      }
+    }, data))
+  }
+
+  postTodo(form, data = {}) {
+    return this.callFunction(Object.assign({
+      name: 'addOne',
+      data: {
+        table: 'todos',
+        data: form,
+      }
+    }, data))
+  }
+
+  modifyTodo(id, form, data = {}) {
+    return this.callFunction(Object.assign({
+      name: 'updateOne',
+      data: {
+        table: 'todos',
+        id,
+        data: form,
+      }
+    }, data))
+  }
+
+  getTodoList(query, data) {
+    return this.callFunction(Object.assign({
+      name: 'findList',
+      data: {
+        table: 'todos',
+        ...query
+      }
+    }, data))
+  }
+
+  queryTodoList(query, data) {
+    return this.callFunction(Object.assign({
+      name: 'todoOpt',
+      data: {
+        opt: 'getTodos',
+        ...query
+      },
+    }, data))
+  }
+
+  getMonthTodo(query, data) {
+    return this.callFunction(Object.assign({
+      name: 'todoOpt',
+      data: {
+        opt: 'getMonthTodo',
+        ...query
+      },
+    }, data))
   }
 }
 

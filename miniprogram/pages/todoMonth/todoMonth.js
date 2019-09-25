@@ -1,8 +1,10 @@
 import util from '../../utils/util.js'
 import constants from '../../utils/constants.js'
 import common from '../../utils/common.js'
+import Todo from '../../models/todo.js'
 
 const app = getApp()
+const todoModal = new Todo()
 
 Page({
   data: {
@@ -14,20 +16,44 @@ Page({
 
   customData: {
     isLoad: false,
-    currentPage: 1,
+    currentDate: {},
     limit: 10,
-    isLock: false
+    isLock: false,
+    months: new Map(), // 保存
+    monthTodos: []
   },
   
   onReachBottom() {
+    const month = this.customData.currentDate
+    !this.data.isBottom && this.onQuery(month.key, month.begin, month.end, month.page + 1)
+  },
 
+  onLoad() {
+    this.getCurrentMonth()
   },
 
   onShow() {
+    if (!this.customData.isLoad) {
+      this.customData.isLoad = true
+      return
+    }
+    const monthsIndex = this.customData.months.get(this.customData.currentDate.key)
+    const month = this.customData.monthTodos[monthsIndex]
+    this.onQuery(month.key, month.begin, month.end, month.page)
+  },
+
+  getCurrentMonth() {
     const date = new Date()
-    const beginDate = new Date(new Date().setDate(1))
-    const endDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
-    this.onQuery(util.formatDateTime(beginDate), util.formatDateTime(endDate), 1)
+    const key = `${date.getFullYear()}-${util.formatNumber(date.getMonth() + 1)}`
+    const begin = util.formatDateTime(new Date(new Date().setDate(1)))
+    const end = util.formatDateTime(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0))
+    Object.assign(this.customData.currentDate, {
+      key,
+      begin,
+      end,
+      page: 1
+    })
+    this.onQuery(key, begin, end, 1)
   },
 
   onUpdate(e) {
@@ -50,52 +76,95 @@ Page({
         break
       case 'switch':
         const { date } = e.detail
+        const dateArr = date.split('-')
+        const begin = util.formatDateTime(new Date(Number(dateArr[0]), Number(dateArr[1]) - 1, 1))
+        const end = util.formatDateTime(new Date(Number(dateArr[0]), Number(dateArr[1]), 0))
+        const months = this.customData.months
+        let page = 1
+        if (months.has(date)) {
+          let monthTodos = this.customData.monthTodos
+          const monthsIndex = months.get(date)
+          this.setData({
+            todos: monthTodos[monthsIndex].todos,
+            isBottom: monthTodos[monthsIndex].isBottom
+          })
+          page = monthTodos[monthsIndex].page
+        } else {
+          this.onQuery(date, begin, end, 1)
+        }
+        Object.assign(this.customData.currentDate, {
+          key: date,
+          begin,
+          end,
+          page
+        })
         break
       default: 
         break
     }
   },
 
-  onQuery(begin, end, page) {
+  onQuery(key, begin, end, page) {
     wx.showNavigationBarLoading()
     if (this.customData.isLock) return
     this.customData.isLock = true
-    wx.cloud.callFunction({
-      name: 'todoOpt',
-      data: {
-        opt: 'getMonthTodos',
-        filter: {
-          begin,
-          end
-        },
-        pager: {
-          page: page,
-          limit: this.customData.limit
-        },
-        order: {
-          name: 'level',
-          type: 'asc'
-        }
+    todoModal.queryTodoList({
+      filter: {
+        period: 3,
+        begin,
+        end
       },
-      success: res => {
-        console.log(res)
-        const { data } = res.result
-        this.setData({
-          todos: page === 1 ? data : this.data.todos.concat(data),
-          isBottom: data.length < this.customData.limit
-        })
-        Object.assign(this.customData, {
-          currentPage: page,
-          isLock: false
-        })
+      pager: {
+        page: page,
+        limit: this.customData.limit
       },
-      fail: err => {
-        common.showToast({ title: '获取数据失败' })
-        console.error('[云函数] [findList] 调用失败：', err)
-      },
+      order: {
+        name: 'level',
+        type: 'asc'
+      }
+    }, {
       complete: () => {
         wx.hideNavigationBarLoading()
       }
+    }).then(res => {
+      const { data } = res
+      const isBottom = data.length < this.customData.limit
+      const todos = page === 1 ? data : Array.from(new Set(this.data.todos.concat(data))) // 去重
+      this.setData({
+        todos,
+        isBottom
+      })
+      let monthTodos = this.customData.monthTodos
+      let months = this.customData.months
+      if (!months.has(key)) {
+        monthTodos.push({
+          key,
+          begin,
+          end,
+          page,
+          todos,
+          isBottom
+        })
+        months.set(key, monthTodos.length - 1)
+      } else {
+        const monthsIndex = months.get(key)
+        Object.assign(monthTodos[monthsIndex], {
+          page,
+          todos,
+          isBottom
+        })
+      }
+      Object.assign(this.customData, {
+        currentDate: {
+          key,
+          begin,
+          end,
+          page
+        },
+        isLock: false,
+        monthTodos,
+        months
+      })
     })
   },
   handleAddTodo() {

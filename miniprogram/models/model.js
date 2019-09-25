@@ -1,11 +1,13 @@
 import util from '../utils/util'
+import Cloud from './cloud'
 
 /**
  * Model
- * 模型基类
+ * 模型类
  */
-class Model {
+class Model extends Cloud {
   constructor() {
+    super()
     this.uuid = util.uuid()
   }
 

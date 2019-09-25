@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
           num: $.sum(1)
         })
         .end()
-      case 'getMonthTodos':
+      case 'getTodos':
         const { userInfo, filter, pager, order } = event
         const orderBy = order || { name: 'createAt', type: 'asc' }
         const page = pager && pager.page || 1
@@ -32,7 +32,7 @@ exports.main = async (event, context) => {
         return await db.collection('todos')
           .where({
             _openid: userInfo.openId,
-            period: 3, // 月计划
+            period: filter.period,
             beginDate: _.gte(filter.begin).and(_.lte(filter.end))
           })
           .orderBy(orderBy.name, orderBy.type)

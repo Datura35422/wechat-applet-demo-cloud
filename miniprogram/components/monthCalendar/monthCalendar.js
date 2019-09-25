@@ -1,5 +1,7 @@
 import util from '../../utils/util.js'
+import Todo from '../../models/todo.js'
 
+const todoModal = new Todo()
 let customData = {}
 
 Component({
@@ -132,33 +134,28 @@ Component({
       return months
     },
     getTodoList(begin, end, key) {
-      wx.cloud.callFunction({
-        name: 'todoOpt',
-        data: {
-          opt: 'getMonthTodo',
-          dateRange: {
-            begin,
-            end
-          }
-        },
-        success: res => {
-          const data = res.result.list
-          if (data.length > 0) {
-            const index = customData.monthArr.indexOf(key)
-            const month = this.data.months[index]
-            let dateSet = new Set()
-            data.map(item => {
-              dateSet.add(item._id)
-            })
-            month.map(item => item.hasTodo = dateSet.has(item.date))
-            this.setData({
-              [`months[${index}]`]: month
-            })
-          }
-        },
-        fail: err => {
-          common.showToast({ title: '获取数据失败' })
-          console.error('[云函数] [todoOpt] 调用失败：', err)
+      todoModal.getMonthTodo({
+        opt: 'getMonthTodo',
+        dateRange: {
+          begin,
+          end
+        }
+      }).then(res => {
+        const data = res.list
+        if (data.length > 0) {
+          const monthIndex = customData.monthArr.indexOf(key)
+          const month = this.data.months[monthIndex]
+          let dateSet = new Set()
+          data.map(item => {
+            dateSet.add(item._id)
+          })
+          let obj = {}
+          month.map((item, index) => {
+            if (dateSet.has(item.date)) {
+              obj[`months[${monthIndex}][${index}].hasTodo`] = true
+            }
+          })
+          this.setData(obj)
         }
       })
     },

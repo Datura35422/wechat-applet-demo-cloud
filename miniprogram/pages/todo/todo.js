@@ -1,6 +1,8 @@
 import Todo from '../../models/todo.js'
 import common from '../../utils/common.js'
 
+const todoModel = new Todo()
+
 Page({
 
   data: {
@@ -10,7 +12,7 @@ Page({
     selectedLevel: 0,
     categories: Todo.categories,
     selectedCategorie: 0,
-    form: new Todo()
+    form: todoModel
   },
 
   customData: {
@@ -23,7 +25,7 @@ Page({
       option.id && this.getOne(option.id)
       option.period && this.setData({
         selectedPeriod: option.period - 1,
-        [`form.period`]: option.period
+        [`form.period`]: Number(option.period)
       })
     }
   },
@@ -100,32 +102,22 @@ Page({
     wx.showLoading({
       title: '加载中...',
     })
-    wx.cloud.callFunction({
-      name: 'findOne',
-      data: {
-        table: 'todos',
-        id: id
-      },
-      success: res => {
-        const data = res.result.data
-        this.setData({
-          selectedPeriod: data.period - 1,
-          selectedLevel: data.level - 1,
-          selectedCategorie: data.categorie - 1,
-          form: data
-        })
-        Object.assign(this.customData, {
-          type: 'edit',
-          isLock: false
-        })
-      },
-      fail: err => {
-        common.showToast({title: '获取数据失败'})
-        console.error('[云函数] [findOne] 调用失败：', err)
-      },
+    todoModel.getTodoDetail(id, {
       complete: () => {
         wx.hideLoading()
       }
+    }).then(res => {
+      const data = res.data
+      this.setData({
+        selectedPeriod: data.period - 1,
+        selectedLevel: data.level - 1,
+        selectedCategorie: data.categorie - 1,
+        form: data
+      })
+      Object.assign(this.customData, {
+        type: 'edit',
+        isLock: false
+      })
     })
   },
 
@@ -133,25 +125,16 @@ Page({
     wx.showLoading({
       title: '保存中...',
     })
-    wx.cloud.callFunction({
-      name: 'addOne',
-      data: {
-        table: 'todos',
-        data: this.data.form,
-      },
-      success: res => {
+    todoModel.postTodo(this.data.form, {
+      complete: () => {
         wx.hideLoading()
-        common.showToast({ title: '保存成功', icon: 'success' })
-        const timer = setTimeout(() => {
-          wx.navigateBack()
-          clearTimeout(timer)
-        }, 1000)
-      },
-      fail: err => {
-        wx.hideLoading()
-        common.showToast({ title: '保存数据失败' })
-        console.error('[云函数] [addOne] 调用失败：', err)
       }
+    }).then(res => {
+      common.showToast({ title: '保存成功', icon: 'success' })
+      const timer = setTimeout(() => {
+        wx.navigateBack()
+        clearTimeout(timer)
+      }, 1000)
     })
   },
 
@@ -161,28 +144,17 @@ Page({
     })
     const data = { ...this.data.form }
     delete data._id
-    wx.cloud.callFunction({
-      name: 'updateOne',
-      data: {
-        table: 'todos',
-        id: this.data.form._id,
-        data: data,
-      },
-      success: res => {
-        console.log(res.result)
+    todoModel.modifyTodo(this.data.form._id, data, {
+      complete: () => {
         wx.hideLoading()
-        common.showToast({ title: '修改成功', icon: 'success' })
-        const timer = setTimeout(() => {
-          wx.navigateBack()
-          clearTimeout(timer)
-        }, 1000)
-      },
-      fail: err => {
-        wx.hideLoading()
-        common.showToast({ title: '修改数据失败' })
-        console.error('[云函数] [findOne] 调用失败：', err)
       }
+    }).then(res => {
+      console.log(res.result)
+      common.showToast({ title: '修改成功', icon: 'success' })
+      const timer = setTimeout(() => {
+        wx.navigateBack()
+        clearTimeout(timer)
+      }, 1000)
     })
   }
-
 })

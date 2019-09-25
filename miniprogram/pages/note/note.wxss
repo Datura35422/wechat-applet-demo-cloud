@@ -1,1 +1,45 @@
-/* miniprogram/pages/note/note.wxss */
+@import "/assets/styles/iconfont.wxss";
+
+.container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 10rpx;
+  box-sizing: border-box;
+}
+
+.iconfont {
+  display: inline-block;
+  padding: 16rpx;
+  width: 48rpx;
+  height: 48rpx;
+  cursor: pointer;
+  font-size: 40rpx;
+}
+
+.toolbar {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.ql-container {
+  margin-top: 40rpx;
+  padding: 24rpx 30rpx;
+  width: 100%;
+  min-height: 40vh;
+  height: auto;
+  color: #333;
+  font-size: 32rpx;
+  line-height: 1.5;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.ql-active {
+  color: #06c;
+}

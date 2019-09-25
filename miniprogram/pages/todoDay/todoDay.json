@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "todo-card": "/components/todoCard/todoCard",
+    "tips-info": "/components/tipsInfo/tipsInfo",
+    "week-calendar": "/components/weekCalendar/weekCalendar"
+  }
+}

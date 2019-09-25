@@ -18,18 +18,3 @@
   border-radius: 20rpx;
 }
 
-.year {
-  background: #DF7F7C; 
-}
-
-.month {
-  background: #F3C35D;
-}
-
-.week {
-  background: #9DD1BE;
-}
-
-.day {
-  background: #7E8EE3;
-}

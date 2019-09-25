@@ -10,7 +10,7 @@
 	},
 	"appid": "wx80f38683fbccf188",
 	"projectname": "applet-cloud",
-	"libVersion": "2.2.5",
+	"libVersion": "2.8.3",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
@@ -45,15 +45,16 @@
 				},
 				{
 					"id": 1,
-					"name": "todo",
-					"pathName": "pages/todo/todo",
+					"name": "pages/noteList/noteList",
+					"pathName": "pages/noteList/noteList",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "todoList",
-					"pathName": "pages/todoList/todoList",
+					"id": 2,
+					"name": "pages/todoDay/todoDay",
+					"pathName": "pages/todoDay/todoDay",
+					"query": "",
 					"scene": null
 				}
 			]

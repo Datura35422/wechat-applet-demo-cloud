@@ -1,0 +1,26 @@
+<view class="modal">
+  <view class="modal-mask" bindtap="handleCancel"></view>
+  <view class="modal-content">
+    <view class="modal-content__title">笔记标题</view>
+    <input 
+      class="modal-content__input" 
+      value="{{title}}" 
+      placeholder="请输入笔记标题" 
+      maxlength="20"
+      bindinput="handleInput"
+    ></input>
+    <view class="modal-content__title">笔记类别</view>
+    <picker 
+      class="modal-content__input" 
+      range="{{categories}}" 
+      range-key="categorieName"
+      bindchange="onPickerChange"
+    >
+      {{categories[selectedCategorie].categorieName}}
+    </picker>
+    <view class="modal-content__buttons">
+      <view class="modal-content__cancel" bindtap="handleCancel">取消</view>
+      <view class="modal-content__confirm" bindtap="handleConfirm">确认</view>
+    </view>
+  </view>
+</view>

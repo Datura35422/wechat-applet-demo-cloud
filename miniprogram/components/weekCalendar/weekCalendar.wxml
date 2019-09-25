@@ -8,7 +8,7 @@
         wx:for="{{ item }}" 
         wx:for-item="week"
         wx:key="{{ week.day }}"
-        class="calendar-week__day {{ week.selected ? 'selected' : '' }}" 
+        class="calendar-week__day {{ week.selected ? type + ' selected' : '' }}" 
         data-index="{{ week.index }}" 
         catchtap="selectDay"
       >{{ week.day }}</view>

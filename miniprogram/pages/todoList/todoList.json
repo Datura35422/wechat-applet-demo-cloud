@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "todo-card": "/components/todoCard/todoCard",
-    "tips-info": "/components/tipsInfo/tipsInfo"
-  }
-}

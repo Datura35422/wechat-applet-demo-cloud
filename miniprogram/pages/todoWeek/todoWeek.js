@@ -1,8 +1,10 @@
 import util from '../../utils/util.js'
 import constants from '../../utils/constants.js'
 import common from '../../utils/common.js'
+import Todo from '../../models/todo.js'
 
 const app = getApp()
+const todoModal = new Todo()
 
 Page({
   data: {
@@ -14,20 +16,20 @@ Page({
 
   customData: {
     isLoad: false,
-    currentDate: null,
-    currentPage: 1,
+    currentWeek: {},
     limit: 10,
-    isLock: false
+    isLock: false,
+    weeks: new Map()
   },
 
   onLoad() {
     const date = util.formatDateTime(new Date())
-    this.customData.currentDate = date
     this.setTitle(date)
-    this.onQuery(1, {
-      period: 1, // 日计划
-      beginDate: date
-    })
+    const currentDate = new Date()
+    const sundayDate = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay()))
+    const saturdayDate = new Date(currentDate.setDate(currentDate.getDate() + (6 - currentDate.getDay())))
+    this.onQuery(util.formatDateTime(sundayDate), util.formatDateTime(saturdayDate), 1)
+    Object.assign(this.customData.currentWeek, { date })
   },
 
   onShow() {
@@ -35,58 +37,55 @@ Page({
       this.customData.isLoad = true
       return
     }
-    this.onQuery(1, {
-      beginDate: this.customData.currentDate
-    })
+    const { begin, end, page } = this.customData.currentWeek
+    this.onQuery(begin, end, page)
   },
 
   onReachBottom() {
-    !this.data.isBottom && this.onQuery(this.customData.currentPage + 1)
+    const { begin, end, page } = this.customData.currentWeek
+    !this.data.isBottom && this.onQuery(begin, end, page + 1)
   },
 
-  onQuery(page, filter) {
-    wx.showNavigationBarLoading()
+  onQuery(begin, end, page) {
     if (this.customData.isLock) return
+    wx.showNavigationBarLoading()
     this.customData.isLock = true
-    wx.cloud.callFunction({
-      name: 'findList',
-      data: {
-        table: 'todos',
-        filter: Object.assign({
-          _openid: app.globalData.openid
-        }, filter),
-        pager: {
-          page: page,
-          limit: this.customData.limit
-        },
-        order: {
-          name: 'level',
-          type: 'asc'
-        }
+    todoModal.queryTodoList({
+      filter: {
+        period: 2,
+        begin,
+        end
       },
-      success: res => {
-        const { data } = res.result
-        this.setData({
-          todos: page === 1 ? data : this.data.todos.concat(data),
-          isBottom: data.length < this.customData.limit
-        })
-        Object.assign(this.customData, {
-          currentPage: page,
-          isLock: false
-        })
+      pager: {
+        page: page,
+        limit: this.customData.limit
       },
-      fail: err => {
-        common.showToast({ title: '获取数据失败' })
-        console.error('[云函数] [findList] 调用失败：', err)
-      },
+      order: {
+        name: 'level',
+        type: 'asc'
+      }
+    }, {
       complete: () => {
+        this.customData.isLock = false
         wx.hideNavigationBarLoading()
       }
+    }).then(res => {
+      console.log(res)
+      const { data } = res
+      const isBottom = data.length < this.customData.limit
+      const todos = page === 1 ? data : Array.from(new Set(this.data.todos.concat(data))) // 去重
+      this.setData({
+        todos,
+        isBottom
+      })
+      const week = { begin, end, page, isBottom, todos }
+      this.customData.weeks.set(begin, week)
+      Object.assign(this.customData.currentWeek, { begin, end, page, isBottom })
     })
   },
 
   onUpdate(e) {
-    const { opt, id } = e.detail
+    const { opt, id, date, begin } = e.detail
     switch (opt) {
       case 'finished':
         this.data.todos.map(item => {
@@ -104,10 +103,19 @@ Page({
         })
         break
       case 'switch':
-        const date = e.detail.date
-        this.onQuery(1, {
-          beginDate: date
-        })
+        Object.assign(this.customData.currentWeek, { date })
+        if (this.customData.weeks.has(begin)) {
+          const { begin, end, page, isBottom, todos } = this.customData.weeks.get(begin)
+          this.setData({
+            todos: begin === date ? todos : todos.filter(item => item.beginDate >= date),
+            isBottom
+          })
+          Object.assign(this.customData.currentWeek, { begin, end, page, isBottom })
+        } else {
+          const beginDate = new Date(begin)
+          const endDate = new Date(beginDate.setDate(beginDate.getDate() + 6))
+          this.onQuery(begin, util.formatDateTime(endDate), 1)
+        }
         this.setTitle(date)
         break
       default:
@@ -116,7 +124,7 @@ Page({
   },
   handleAddTodo() {
     wx.navigateTo({
-      url: '/pages/todo/todo'
+      url: '/pages/todo/todo?period=2'
     })
   },
   setTitle(title) {

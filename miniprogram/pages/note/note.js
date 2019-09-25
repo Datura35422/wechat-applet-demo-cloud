@@ -1,66 +1,151 @@
-// miniprogram/pages/note/note.js
+import Note from '../../models/note.js'
+import common from '../../utils/common.js'
+
+const noteModel = new Note()
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
+    form: noteModel,
+    formats: {},
+    bottom: 0,
+    readOnly: false,
+    placeholder: '开始输入...',
+    _focus: false,
+    showModal: false
+  },
+
+  onLoad(option) {
+    if (option) {
+      // option.id && this.getOne(option.id)
+    }
+  },
+
+  onEditorReady() {
+    const that = this
+    wx.createSelectorQuery().select('#editor').context(function (res) {
+      that.editorCtx = res.context
+    }).exec()
+  },
+
+  undo() { // 撤销
+    this.editorCtx.undo()
+  },
+
+  redo() { // 恢复
+    this.editorCtx.redo()
+  },
+
+  format(e) {
+    let { name, value } = e.target.dataset
+    if (!name) return
+    this.editorCtx.format(name, value)
 
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onStatusChange(e) {
+    const formats = e.detail
+    this.setData({ formats })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  insertDivider() {
+    this.editorCtx.insertDivider({
+      success() {
+        console.log('insert divider success')
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  clear() {
+    this.editorCtx.clear({
+      success(res) {
+        console.log("clear success")
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  removeFormat() {
+    this.editorCtx.removeFormat()
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  insertDate() {
+    const date = new Date()
+    const formatDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+    this.editorCtx.insertText({
+      text: formatDate
+    })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  insertImage() {
+    const that = this
+    wx.chooseImage({
+      count: 1,
+      success() {
+        that.editorCtx.insertImage({
+          src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543767268337&di=5a3bbfaeb30149b2afd33a3c7aaa4ead&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20151031%2Ftooopen_sy_147004931368.jpg',
+          data: {
+            id: 'abcd',
+            role: 'god'
+          },
+          success: function () {
+            console.log('insert image success')
+          }
+        })
+      }
+    })
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  readOnlyChange() {
+    if (!this.data.readOnly) {
+      this.setData({
+        showModal: true
+      })
+    } else {
+      this.setData({
+        readOnly: !this.data.readOnly
+      })
+    }
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+  onSaveNote(form) {
+    const _this = this
+    wx.showLoading({
+      title: '保存中...',
+    })
+    this.editorCtx.getContents({
+      success(res) {
+        console.log(res)
+        const { html, text } = res
+        Object.assign(form, {
+          html,
+          content: text
+        })
+        noteModel.postNote(form, {
+          complete: () => {
+            wx.hideLoading()
+          }
+        }).then(res => {
+          common.showToast({ title: '保存成功', icon: 'success' })
+          const timer = setTimeout(() => {
+            wx.navigateBack()
+            clearTimeout(timer)
+          }, 1000)
+        })
+      },
+      fail(res) {
+        console.log(res)
+      }
+    })
+  },
 
+  handleModal(e) {
+    console.log(e)
+    const { opt, value } = e.detail
+    if (opt === 'confirm') {
+      this.onSaveNote(value)
+    } else {
+      this.setData({
+        showModal: false
+      })
+    }
   }
 })

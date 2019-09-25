@@ -17,3 +17,21 @@
   </view>
   <view class="btn-add" bindtap="handleAddNote">+</view>
 </view>
+
+<view hidden="{{options.hiddenOptions}}" class="ripple fast {{ options.hiddenOption }} note-options__wrapper">
+  <view class="note-options__mask" bindtap="handleCancel"></view>
+  <view class="note-options">
+    <view 
+      wx:for="{{nextPages}}" 
+      wx:key="{{item.key}}" 
+      data-path="{{item.path}}" 
+      class="ripple fast bounceInUp note-option"
+      bindtap="toPage"
+    >
+      <image class="icon-option" src="{{item.icon}}"></image>
+    </view>
+    <view class="ripple fast bounceInUp note-option" bindtap="handleCancel">
+      <image class="icon-option" src="/assets/icons/cancel@gray.png"></image>
+    </view>
+  </view>
+</view>

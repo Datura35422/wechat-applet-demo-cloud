@@ -9,6 +9,13 @@ let customData = {
 }
 
 Component({
+  properties: {
+    type: {
+      type: String,
+      value: 'week'
+    }
+  },
+
   data: {
     weeksTitle: ['日', '一', '二', '三', '四', '五', '六'],
     weeks:[],
@@ -51,6 +58,7 @@ Component({
           year: this.getPartDate('year', date, i),
           month: this.getPartDate('month', date, i),
           day: this.getPartDate('day', date, i),
+          date: this.getPartDate('date', date, i),
           selected: opt === 'current' ? i === customData.current.week : i === 0
         })
       }
@@ -74,6 +82,9 @@ Component({
         case 'day':
           partDate = newDate.getDate()
           break
+        case 'date':
+          partDate = util.formatDateTime(newDate)
+          break
         default:
           break
       }
@@ -93,7 +104,7 @@ Component({
       this.setData({
         [`weeks[${currentItem}]`]: week
       })
-      this.onUpdate(selectedDate)
+      this.onUpdate(selectedDate, this.data.weeks[currentItem][0].date)
     },
     onChange(e) {
       const current = e.detail.current
@@ -101,7 +112,7 @@ Component({
       const selected = this.data.weeks[current].filter(item => item.selected)[0]
       if (selected) {
         const selectedDate = `${selected.year}-${util.formatNumber(selected.month)}-${util.formatNumber(selected.day)}`
-        this.onUpdate(selectedDate)
+        this.onUpdate(selectedDate, this.data.weeks[current][0].date)
       }
       if (current === this.data.weeks.length - 1) {
         this.getNextWeek()
@@ -109,9 +120,10 @@ Component({
         this.getBeforeWeek()
       }
     },
-    onUpdate(date) {
+    onUpdate(date, begin, opt) {
       this.triggerEvent('update', {
         date,
+        begin, // 当前周的第一天（周日）
         opt: 'switch'
       })
     }

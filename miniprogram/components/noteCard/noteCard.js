@@ -4,7 +4,7 @@ Component({
   properties: {
     note: {
       type: Note,
-      default: new Note()
+      value: new Note()
     }
   }
 })

@@ -1,13 +1,17 @@
 <view class="page">
+  <week-calendar type="day" bindupdate="onUpdate"/>
   <view
     wx:for="{{ todos }}"
     wx:key="{{ item.uuid }}"
     class="ripple fast fadeInRight todo-item"
-    style="animation-delay: {{ delay ? index * 0.1 : 0 }}s">
+    style="animation-delay: {{ delay ? index * 0.1 : 0 }}s"
+    data-id="{{ item._id }}" 
+    bindlongpress="onRemove"
+  >
     <todo-card
       todo="{{ item }}"
-      index="{{ index }}"
-      data-uuid="{{ item.uuid }}" />
+      bindupdate="onUpdate"
+    />
   </view>
   <view class="ripple bounceIn" wx:if="{{ !todos.length }}">
     <tips-info text="{{tips.empty}}"></tips-info>

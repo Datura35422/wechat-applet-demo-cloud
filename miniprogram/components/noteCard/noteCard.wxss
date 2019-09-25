@@ -1,4 +1,4 @@
-.todo-card {
+.note-card {
   background-color: #fff;
   border-radius: 8rpx;
   margin: 30rpx;
@@ -8,14 +8,20 @@
   font-size: 32rpx;
 }
 
-.todo-card__title {
+.note-card__title {
   display: block;
   border-bottom: 1rpx dashed #ccc;
   padding: 0 20rpx 20rpx 0;
 }
 
-.todo-card__content {
+.note-card__content {
   display: block;
   padding: 20rpx 0 0 0;
   font-size: 28rpx;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /*这个数字是设置要显示省略号的行数*/
+  -webkit-box-orient: vertical;
 }
