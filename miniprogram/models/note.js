@@ -60,7 +60,7 @@ class Note extends Model {
     }, data))
   }
 
-  modifyTodo(id, form, data = {}) {
+  modifyNote(id, form, data = {}) {
     return this.callFunction(Object.assign({
       name: 'updateOne',
       data: {
@@ -68,6 +68,16 @@ class Note extends Model {
         id,
         data: form,
       }
+    }, data))
+  }
+
+  delNote(id, data) {
+    return this.callFunction(Object.assign({
+      name: 'delOne',
+      data: {
+        table: 'notes',
+        id
+      },
     }, data))
   }
 

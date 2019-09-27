@@ -65,10 +65,6 @@ Page({
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath
             app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
           },
           fail: e => {
             console.error('[上传文件] 失败：', e)

@@ -1,4 +1,4 @@
-<view class="note-card">
+<view class="note-card" catchtap="onDetail" catchlongpress="onRemove">
   <view wx:if="{{ !!note.title }}" class="note-card__title">
     {{note.title}}
   </view>

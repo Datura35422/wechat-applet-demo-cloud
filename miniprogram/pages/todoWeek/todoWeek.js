@@ -101,6 +101,9 @@ Page({
         this.setData({
           todos: this.data.todos.filter(item => item._id !== id)
         })
+        const key = this.customData.currentWeek.begin
+        const weekObj = this.customData.weeks.get(key)
+        this.customData.weeks.set(key, Object.assign(weekObj, { todos: this.data.todos }))
         break
       case 'switch':
         Object.assign(this.customData.currentWeek, { date })

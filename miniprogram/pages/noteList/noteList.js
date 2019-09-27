@@ -119,5 +119,17 @@ Page({
         }
       })
     }
-  }
+  },
+  onUpdate(e) {
+    const { opt, id } = e.detail
+    switch (opt) {
+      case 'remove':
+        this.setData({
+          notes: this.data.notes.filter(item => item._id !== id)
+        })
+        break
+      default:
+        break
+    }
+  },
 })

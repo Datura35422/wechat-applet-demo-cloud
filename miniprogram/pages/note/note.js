@@ -1,7 +1,10 @@
 import Note from '../../models/note.js'
+import Upload from '../../models/upload.js'
 import common from '../../utils/common.js'
+import util from '../../utils/util.js'
 
 const noteModel = new Note()
+const uploadModel = new Upload()
 
 Page({
   data: {
@@ -14,17 +17,29 @@ Page({
     showModal: false
   },
 
+  customData: {
+    type: 'add',
+    id: ''
+  },
+
   onLoad(option) {
-    if (option) {
-      // option.id && this.getOne(option.id)
+    if (option && option.id) {
+      Object.assign(this.customData, {
+        type: 'edit',
+        id: option.id
+      })
+      this.setData({
+        readOnly: true
+      })
     }
   },
 
   onEditorReady() {
     const that = this
-    wx.createSelectorQuery().select('#editor').context(function (res) {
+    wx.createSelectorQuery().select('#editor').context(res => {
       that.editorCtx = res.context
     }).exec()
+    this.customData.type === 'edit' && this.getNote(this.customData.id)
   },
 
   undo() { // 撤销
@@ -79,18 +94,44 @@ Page({
     const that = this
     wx.chooseImage({
       count: 1,
-      success() {
-        that.editorCtx.insertImage({
-          src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543767268337&di=5a3bbfaeb30149b2afd33a3c7aaa4ead&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20151031%2Ftooopen_sy_147004931368.jpg',
-          data: {
-            id: 'abcd',
-            role: 'god'
-          },
-          success: function () {
-            console.log('insert image success')
-          }
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        wx.showLoading({
+          title: '插入中...',
         })
+        that.doUpload(res)
       }
+    })
+  },
+
+  // 上传图片
+  doUpload(image) {
+    const that = this
+    // 选择图片
+    const filePath = image.tempFilePaths[0]
+    // 上传图片
+    const randomStr = util.randomStr(8)
+    const cloudPath = randomStr + filePath.match(/\.[^.]+?$/)[0]
+    uploadModel.uploadFile({
+      cloudPath,
+      filePath
+    }).then(res => {
+      const { fileID } = res
+      that.editorCtx.insertImage({
+        src: fileID,
+        data: {
+          id: randomStr
+        },
+        success() {
+          wx.hideLoading()
+          common.showToast({ title: '插入成功' })
+        },
+        fail() {
+          wx.hideLoading()
+          common.showToast({ title: '插入失败' })
+        }
+      })
     })
   },
 
@@ -106,8 +147,8 @@ Page({
     }
   },
 
-  onSaveNote(form) {
-    const _this = this
+  onConfirmNote(form) {
+    const that = this
     wx.showLoading({
       title: '保存中...',
     })
@@ -119,21 +160,45 @@ Page({
           html,
           content: text
         })
-        noteModel.postNote(form, {
-          complete: () => {
-            wx.hideLoading()
-          }
-        }).then(res => {
-          common.showToast({ title: '保存成功', icon: 'success' })
-          const timer = setTimeout(() => {
-            wx.navigateBack()
-            clearTimeout(timer)
-          }, 1000)
-        })
+        if (this.customData.type === 'add') {
+          that.onSave(form)
+        } else {
+          that.onUpdate(form._id, form)
+        }
       },
       fail(res) {
         console.log(res)
+        common.showToast({ title: '保存失败' })
       }
+    })
+  },
+
+  onSave(form) {
+    noteModel.postNote(form, {
+      complete: () => {
+        wx.hideLoading()
+      }
+    }).then(res => {
+      common.showToast({ title: '保存成功', icon: 'success' })
+      const timer = setTimeout(() => {
+        wx.navigateBack()
+        clearTimeout(timer)
+      }, 1000)
+    })
+  },
+
+  onUpdate(id, form) {
+    delete form._id
+    noteModel.modifyNote(id, form, {
+      complete: () => {
+        wx.hideLoading()
+      }
+    }).then(res => {
+      common.showToast({ title: '保存成功', icon: 'success' })
+      const timer = setTimeout(() => {
+        wx.navigateBack()
+        clearTimeout(timer)
+      }, 1000)
     })
   },
 
@@ -141,11 +206,33 @@ Page({
     console.log(e)
     const { opt, value } = e.detail
     if (opt === 'confirm') {
-      this.onSaveNote(value)
+      this.onConfirmNote(value)
     } else {
       this.setData({
         showModal: false
       })
     }
-  }
+  },
+
+  getNote(id) {
+    wx.showLoading({
+      title: '加载中...'
+    })
+    noteModel.getNoteDetail(id).then(res => {
+      this.setData({
+        form: res.data
+      })
+      this.editorCtx.setContents({
+        html: res.data.html,
+        success() {
+          wx.hideLoading()
+          common.showToast({ title: '加载成功' })
+        },
+        fail() {
+          wx.hideLoading()
+          common.showToast({ title: '加载失败' })
+        }
+      })
+    })
+  },
 })

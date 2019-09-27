@@ -1,0 +1,5 @@
+<view class="container">
+  <view class="note-detail__title">{{note.title}}</view>
+  <rich-text class="note-detail__content" nodes="{{note.html}}"></rich-text>
+  <button class="btn-red" bindtap="onEdit">编辑</button>
+</view>

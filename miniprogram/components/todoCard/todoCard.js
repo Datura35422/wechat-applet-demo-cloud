@@ -2,6 +2,8 @@ import Todo from '../../models/todo'
 import util from '../../utils/util.js'
 import common from '../../utils/common.js'
 
+const todoModel = new Todo()
+
 let customData = {
   isLock: false
 }
@@ -41,31 +43,19 @@ Component({
         completed: true,
         completedAt: currentDate
       }
-      wx.cloud.callFunction({
-        name: 'updateOne',
-        data: {
-          table: 'todos',
-          id: this.data.todo._id,
-          data,
-        },
-        success: res => {
-          common.showToast({ title: '不错呦~', icon: 'success' })
-          console.log(res)
-          this.triggerEvent('update', { id: this.data.todo._id, opt: 'finished' })
-        },
-        fail: err => {
-          common.showToast({ title: '更新数据失败' })
-          console.error('[云函数] [updateOne] 调用失败：', err)
-        }
+      todoModel.modifyTodo(this.data.todo._id, data, {}).then(res => {
+        common.showToast({ title: '不错呦~', icon: 'success' })
+        this.triggerEvent('update', { id: this.data.todo._id, opt: 'finished' })
       })
     },
     onRemove(e) {
       if (customData.isLock) return
+      customData.isLock = true
       const _this = this
       const { _id } = this.data.todo
       common.showModal({
         title: '提示',
-        content: '确认删除这条消息？',
+        content: '确认删除这条待办？',
         success: {
           confirm() {
             _this.onDelTodo(_id)
@@ -74,21 +64,13 @@ Component({
       })
     },
     onDelTodo(id) {
-      wx.cloud.callFunction({
-        name: 'delOne',
-        data: {
-          table: 'todos',
-          id
-        },
-        success: res => {
-          common.showToast({ title: '删除数据成功', icon: 'success' })
-          this.triggerEvent('update', { id: this.data.todo._id, opt: 'remove' })
+      todoModel.delTodo(id, {
+        complete: () => {
           customData.isLock = false
-        },
-        fail: err => {
-          common.showToast({ title: '删除数据失败' })
-          console.error('[云函数] [delOne] 调用失败：', err)
         }
+      }).then(res => {
+        common.showToast({ title: '删除数据成功', icon: 'success' })
+        this.triggerEvent('update', { id: this.data.todo._id, opt: 'remove' })
       })
     },
   }

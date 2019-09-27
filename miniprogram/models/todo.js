@@ -77,6 +77,16 @@ class Todo extends Model {
     }, data))
   }
 
+  delTodo(id, data) {
+    return this.callFunction(Object.assign({
+      name: 'delOne',
+      data: {
+        table: 'todos',
+        id
+      },
+    }, data))
+  }
+
   getTodoList(query, data) {
     return this.callFunction(Object.assign({
       name: 'findList',

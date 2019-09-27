@@ -96,6 +96,9 @@ Page({
         this.setData({
           todos: this.data.todos.filter(item => item._id !== id)
         })
+        const key = this.customData.currentDay.filter.beginDate
+        const dayObj = this.customData.days.get(key)
+        this.customData.days.set(key, Object.assign(dayObj, { todos: this.data.todos }))
         break
       case 'switch':
         const date = e.detail.date
