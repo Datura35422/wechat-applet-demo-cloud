@@ -2,7 +2,12 @@
 <view class="container">
   <view class="userinfo">
     <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
-    <view>{{openid ? 'openid:' + openid : '未登录'}}</view>
+    <view bindtap="onGetOpenid">{{openid ? 'openid:' + openid : '未登录'}}</view>
   </view>
-  <button wx:if="{{ !openid }}" class="btn-red" bindtap="onGetOpenid">登录</button>
+  <view class="menu-container">
+    <view class="ripple {{animation.one}} menu-item menu-one">一</view>
+    <view class="ripple {{animation.two}} menu-item menu-two">二</view>
+    <view class="ripple {{animation.three}} menu-item menu-three">三</view>
+    <view class="ripple {{animation.four}} menu-item menu-four">四</view>
+  </view>
 </view>

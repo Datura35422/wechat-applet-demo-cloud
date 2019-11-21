@@ -8,16 +8,37 @@ let customData = {
 
 Page({
   data: {
-    openid: app.globalData.openid
+    openid: app.globalData.openid,
+    animation: {}
+  },
+
+  customData: {
+    timer: null
   },
 
   onLoad() {
-    if (!wx.cloud) {
-      common.showModal({
-        title: '初始化失败',
-        content: '请使用 2.2.3 或以上的基础库以使用云能力'
-      })
+    const animation = {
+      two: 'fadeInRight',
+      three: 'fadeInUp',
+      four: 'fadeInRight'
     }
+    this.setData({
+      ['animation.one']: 'fadeInDown'
+    })
+    let num = 0
+    for (let key in animation) {
+      num++
+      this.timeoutAnimation(key, animation[key], num)
+    }
+  },
+
+  timeoutAnimation(key, animation, num) {
+    this.customData.timer = setTimeout(() => {
+      this.setData({
+        [`animation.${key}`]: animation
+      })
+      num > 2 && clearTimeout(this.customData.timer)
+    }, 1000 * num)
   },
 
   onGetOpenid() {

@@ -7,7 +7,7 @@ page {
   justify-content: flex-start;
 }
 
-.userinfo, .uploader, .tunnel {
+.userinfo {
   margin-top: 40rpx;
   height: 140rpx;
   width: 100%;
@@ -31,93 +31,103 @@ page {
   overflow: hidden;
 }
 
-.uploader, .tunnel {
-  height: auto;
-  padding: 0 0 0 40rpx;
-  flex-direction: column;
-  align-items: flex-start;
-  box-sizing: border-box;
-}
-
-.uploader-text, .tunnel-text {
+.menu-container {
+  margin-top: 100rpx;
   width: 100%;
-  line-height: 52px;
-  font-size: 34rpx;
-  color: #007aff;
-}
-
-.uploader-container {
-  width: 100%;
-  height: 400rpx;
-  padding: 20rpx 20rpx 20rpx 0;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.uploader-image {
-  width: 100%;
-  height: 360rpx;
-}
-
-.tunnel {
-  padding: 0 0 0 40rpx;
-}
-
-.tunnel-text {
-  position: relative;
-  color: #222;
   display: flex;
   flex-direction: row;
-  align-content: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.tunnel-text:first-child {
-  border-top: none;
-}
-
-.tunnel-switch {
-  position: absolute;
-  right: 20rpx;
-  top: -2rpx;
-}
-
-.disable {
-  color: #888;
-}
-
-.service {
-  position: fixed;
-  right: 40rpx;
-  bottom: 40rpx;
-  width: 140rpx;
-  height: 140rpx;
-  border-radius: 50%;
-  background: linear-gradient(#007aff, #0063ce);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-content: center;
   justify-content: center;
-  transition: all 300ms ease;
+  flex-wrap: wrap;
 }
 
-.service-button {
+.menu-item {
+  position: relative;
+  height: 200rpx;
+  width: 40%;
+  line-height: 200rpx;
+  text-align: center;
+  
+}
+
+.menu-one {
+  border-top-left-radius: 20rpx;
+  background: linear-gradient(315deg, transparent 15rpx, #DF7F7C 0) left, linear-gradient(45deg, transparent 15rpx, #DF7F7C 0) right;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+}
+.menu-one::after {
+  content: '';
   position: absolute;
-  top: 40rpx;
+  top: 50%;
+  right: -20rpx;
+  transform: translateY(-50%);
+  border-top: 20rpx solid;
+  border-bottom: 20rpx solid;
+  border-right: 0;
+  border-left: 20rpx solid;
+  border-color: transparent transparent transparent #DF7F7C;
+  z-index: 10;
 }
 
-.service:active {
-  box-shadow: none;
+.menu-two {
+  opacity: 0;
+  border-top-right-radius: 20rpx;
+  background: linear-gradient(45deg, transparent 15rpx, #F3C35D 0) top, linear-gradient(135deg, transparent 15rpx, #F3C35D 0) bottom;
+  background-size: 100% 50%;
+  background-repeat: no-repeat;
+}
+.menu-two::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -20rpx;
+  transform: translateX(-50%);
+  border-top: 20rpx solid;
+  border-bottom: 0;
+  border-right: 20rpx solid;
+  border-left: 20rpx solid;
+  border-color: #F3C35D transparent transparent transparent;
+  z-index: 20;
 }
 
-.request-text {
-  padding: 20rpx 0;
-  font-size: 24rpx;
-  line-height: 36rpx;
-  word-break: break-all;
+.menu-three {
+  opacity: 0;
+  border-bottom-left-radius: 20rpx;
+  background: linear-gradient(315deg, transparent 15rpx, #9DD1BE 0) top, linear-gradient(225deg, transparent 15rpx, #9DD1BE 0) bottom;
+  background-size: 100% 50%;
+  background-repeat: no-repeat;
+}
+.menu-three::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -20rpx;
+  transform: translateX(-50%);
+  border-top: 0;
+  border-bottom: 20rpx solid;
+  border-right: 20rpx solid;
+  border-left: 20rpx solid;
+  border-color: transparent transparent #9DD1BE transparent;
+  z-index: 30;
+}
+
+.menu-four {
+  opacity: 0;
+  border-bottom-right-radius: 20rpx;
+  background: linear-gradient(225deg, transparent 15rpx, #7E8EE3 0) left, linear-gradient(135deg, transparent 15rpx, #7E8EE3 0) right;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+}
+.menu-four::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -20rpx;
+  transform: translateY(-50%);
+  border-top: 20rpx solid;
+  border-bottom: 20rpx solid;
+  border-right: 20rpx solid;
+  border-left: 0;
+  border-color: transparent #7E8EE3 transparent transparent;
+  z-index: 40;
 }
