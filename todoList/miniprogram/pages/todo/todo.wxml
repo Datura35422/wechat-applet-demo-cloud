@@ -49,8 +49,7 @@
           class="item-picker" 
           mode="date" 
           value="{{form.beginDate}}" 
-          start="{{beginDateStart}}" 
-          end="{{beginDateEnd}}" 
+          start="{{beginDateStart}}"
           data-type="beginDate"
           bindchange="onPickerChange"
         >
@@ -62,8 +61,7 @@
             class="item-picker" 
             mode="date" 
             value="{{form.finishDate}}" 
-            start="{{finishDateStart}}" 
-            end="{{finishDateEnd}}" 
+            start="{{finishDateStart}}"
             data-type="finishDate"
             bindchange="onPickerChange"
           >
@@ -79,9 +77,7 @@
           class="item-picker" 
           mode="time" 
           value="{{form.beginTime}}" 
-          start="{{beignTimeStart}}" 
-          end="{{beignTimeEnd}}" 
-          data-type="beignTime"
+          data-type="beginTime"
           bindchange="onPickerChange"
         >
           {{form.beginTime}}
@@ -91,8 +87,6 @@
           class="item-picker" 
           mode="time" 
           value="{{form.finishTime}}" 
-          start="{{finishTimeStart}}" 
-          end="{{finishTimeEnd}}" 
           data-type="finishTime"
           bindchange="onPickerChange"
         >

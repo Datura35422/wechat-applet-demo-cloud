@@ -4,7 +4,7 @@ import common from '../../utils/common.js'
 import Todo from '../../models/todo.js'
 
 const app = getApp()
-const todoModal = new Todo()
+const todoModel = new Todo()
 
 Page({
   data: {
@@ -50,7 +50,7 @@ Page({
     if (this.customData.isLock) return
     this.customData.isLock = true
     const beginDate = filter.beginDate || util.formatDateTime(new Date())
-    todoModal.getTodoList({
+    todoModel.getTodoList({
       filter: Object.assign({
         _openid: app.globalData.openid,
         period: 1,
@@ -60,7 +60,7 @@ Page({
         limit: this.customData.limit
       },
       order: {
-        name: 'level',
+        name: 'beginTime',
         type: 'asc'
       }
     }, {
@@ -79,27 +79,76 @@ Page({
     })
   },
 
+  onDetail(e) {
+    const { id } = e.currentTarget.dataset
+    wx.navigateTo({
+      url: `/pages/todo/todo?id=${id}`,
+    })
+  },
+
+  onFinish(e) {
+    if (this.customData.isLock) return
+    this.customData.isLock = true
+    const { id } = e.currentTarget.dataset
+    const currentDate = util.formatDateTime(new Date(), true)
+    const data = {
+      completed: true,
+      completedAt: currentDate
+    }
+    todoModel.modifyTodo(id, data, {
+      complete: () => {
+        this.customData.isLock = false
+      }
+    }).then(res => {
+      common.showToast({ title: '不错呦~', icon: 'success' })
+      this.data.todos.map(item => {
+        if (item._id === id) {
+          item.completed = true
+        }
+      })
+      this.setData({
+        todos: this.data.todos
+      })
+    })
+  },
+
+  onRemove(e) {
+    if (this.customData.isLock) return
+    this.customData.isLock = true
+    const _this = this
+    const { id } = e.currentTarget.dataset
+    common.showModal({
+      title: '提示',
+      content: '确认删除这条待办？',
+      success: {
+        confirm() {
+          _this.onDelTodo(id)
+        },
+        cancel() {
+          _this.customData.isLock = false
+        }
+      },
+      fail() {
+        _this.customData.isLock = false
+      }
+    })
+  },
+  onDelTodo(id) {
+    todoModel.delTodo(id, {
+      complete: () => {
+        this.customData.isLock = false
+      }
+    }).then(res => {
+      common.showToast({ title: '删除数据成功', icon: 'success' })
+      this.setData({
+        todos: this.data.todos.filter(item => item._id !== id)
+      })
+    })
+  },
+
   onUpdate(e) {
     const { opt, id } = e.detail
     switch (opt) {
-      case 'finished':
-        this.data.todos.map(item => {
-          if (item._id === id) {
-            item.completed = true
-          }
-        })
-        this.setData({
-          todos: this.data.todos
-        })
-        break
-      case 'remove':
-        this.setData({
-          todos: this.data.todos.filter(item => item._id !== id)
-        })
-        const key = this.customData.currentDay.filter.beginDate
-        const dayObj = this.customData.days.get(key)
-        this.customData.days.set(key, Object.assign(dayObj, { todos: this.data.todos }))
-        break
       case 'switch':
         const date = e.detail.date
         if (this.customData.days.has(date)) {

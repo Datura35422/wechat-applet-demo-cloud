@@ -73,7 +73,7 @@ page {
   opacity: 0;
   border-top-right-radius: 20rpx;
   background: linear-gradient(45deg, transparent 15rpx, #F3C35D 0) top, linear-gradient(135deg, transparent 15rpx, #F3C35D 0) bottom;
-  background-size: 100% 50%;
+  background-size: 100% 51%;
   background-repeat: no-repeat;
 }
 .menu-two::after {
@@ -94,7 +94,7 @@ page {
   opacity: 0;
   border-bottom-left-radius: 20rpx;
   background: linear-gradient(315deg, transparent 15rpx, #9DD1BE 0) top, linear-gradient(225deg, transparent 15rpx, #9DD1BE 0) bottom;
-  background-size: 100% 50%;
+  background-size: 100% 51%;
   background-repeat: no-repeat;
 }
 .menu-three::after {
@@ -115,7 +115,7 @@ page {
   opacity: 0;
   border-bottom-right-radius: 20rpx;
   background: linear-gradient(225deg, transparent 15rpx, #7E8EE3 0) left, linear-gradient(135deg, transparent 15rpx, #7E8EE3 0) right;
-  background-size: 50% 100%;
+  background-size: 51% 100%;
   background-repeat: no-repeat;
 }
 .menu-four::after {

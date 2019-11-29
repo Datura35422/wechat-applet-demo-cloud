@@ -43,7 +43,11 @@ Component({
         completed: true,
         completedAt: currentDate
       }
-      todoModel.modifyTodo(this.data.todo._id, data, {}).then(res => {
+      todoModel.modifyTodo(this.data.todo._id, data, {
+        complete: () => {
+          this.customData.isLock = false
+        }
+      }).then(res => {
         common.showToast({ title: '不错呦~', icon: 'success' })
         this.triggerEvent('update', { id: this.data.todo._id, opt: 'finished' })
       })
@@ -59,7 +63,13 @@ Component({
         success: {
           confirm() {
             _this.onDelTodo(_id)
+          },
+          cancel() {
+            customData.isLock = false
           }
+        },
+        fail() {
+          customData.isLock = false
         }
       })
     },

@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="title-wrap">
+    <view class="title">{{fun.title}}</view>
+    <view class="title-icon">
+      <image class="icon" src="/assets/icons/next.png" catch:tap="next"></image>
+      <image class="icon" src="/assets/icons/heart.png" catch:tap="hit"></image>
+    </view>
+  </view>
+  <view class="header">
+    <view class="hd" style="transform:rotateZ({{angle}}deg);">
+      <view class="avatar">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <image class="wave" src="/assets/images/wave.png" mode="aspectFill"></image>
+      <image class="wave wave-bg" src="/assets/images/wave.png" mode="aspectFill"></image>
+    </view>
+    <view class="bd"></view>
+  </view>
+</view>

@@ -1,18 +1,24 @@
 <view class="page">
-  <week-calendar type="day" bindupdate="onUpdate"/>
-  <view
-    wx:for="{{ todos }}"
-    wx:key="{{ item.uuid }}"
-    class="ripple fast fadeInRight todo-item"
-    style="animation-delay: {{ delay ? index * 0.1 : 0 }}s"
-  >
-    <todo-card
-      todo="{{ item }}"
-      bindupdate="onUpdate"
-    />
+  <view class="menu-wrap">
+    <view class="menu-date">TIME</view>
+    <view class="menu-todo">EVENTS</view>
   </view>
-  <view class="ripple bounceIn" wx:if="{{ !todos.length }}">
-    <tips-info text="{{tips.empty}}"></tips-info>
+  <view class="list-wrap">
+    <view 
+      class="ripple fast fadeInRight list-item" 
+      wx:for="{{ todos }}"
+      wx:key="{{ item._id }}"
+      style="animation-delay: {{ delay ? index * 0.1 : 0 }}s"
+    >
+      <view class="list-date">{{ item.beginTime }}</view>
+      <view class="list-content">
+        <view class="item-content day" data-id="{{ item._id }}" catch:tap="onDetail" catch:longpress="onRemove">
+          <view class="list-text">{{ item.content }}</view>
+          <image wx:if="{{ item.completed }}" class="icon-status" src="/assets/icons/checked.png" />
+          <image wx:else class="icon-status" src="/assets/icons/play.png" data-id="{{ item._id }}" catch:tap="onFinish" />
+        </view>
+      </view>
+    </view>
   </view>
   <view class="btn-add" bindtap="handleAddTodo">+</view>
 </view>

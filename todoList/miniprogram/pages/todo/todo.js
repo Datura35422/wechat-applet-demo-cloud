@@ -12,7 +12,9 @@ Page({
     selectedLevel: 0,
     categories: Todo.categories,
     selectedCategorie: 0,
-    form: todoModel
+    form: todoModel,
+    // finishDateStart: '',
+    // beginDateStart: ''
   },
 
   customData: {
@@ -66,8 +68,8 @@ Page({
       case 'finishDate':
         form.finishDate = value
         break 
-      case 'beignTime':
-        form.finishDate = value
+      case 'beginTime':
+        form.beginTime = value
         break
       case 'finishTime':
         form.finishTime = value

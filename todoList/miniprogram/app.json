@@ -8,7 +8,8 @@
     "pages/todoType/todoType",
     "pages/todoMonth/todoMonth",
     "pages/todoWeek/todoWeek",
-    "pages/noteDetail/noteDetail"
+    "pages/noteDetail/noteDetail",
+    "pages/my/my"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -25,7 +26,7 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "HOME"
       },
       {
         "pagePath": "pages/todoType/todoType",
@@ -34,6 +35,10 @@
       {
         "pagePath": "pages/noteList/noteList",
         "text": "NOTE"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "MY"
       }
     ]
   },

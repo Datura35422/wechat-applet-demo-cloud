@@ -19,7 +19,7 @@ Page({
     currentDate: {},
     limit: 10,
     isLock: false,
-    months: new Map(), // 保存
+    months: new Map(), // 保存index
     monthTodos: []
   },
   
@@ -146,6 +146,15 @@ Page({
           isBottom
         })
         months.set(key, monthTodos.length - 1)
+      } else if (!monthTodos[months.get(key)]) {
+        monthTodos[months.get(key)] = {
+          key,
+          begin,
+          end,
+          page,
+          todos,
+          isBottom
+        }
       } else {
         const monthsIndex = months.get(key)
         Object.assign(monthTodos[monthsIndex], {

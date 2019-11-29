@@ -28,7 +28,9 @@ Page({
   },
 
   onLoad() {
-    this.onQuery(1, {})
+    if (app.globalData.openid !== '') {
+      this.onQuery(1, {})
+    }
   },
 
   onShow() {
