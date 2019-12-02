@@ -1,4 +1,4 @@
-<view class="page">
+<view wx:if="{{ isLogin }}" class="page">
   <view
     wx:for="{{ notes }}"
     wx:key="{{ item._id }}"
@@ -13,6 +13,8 @@
   </view>
   <view class="btn-add" bindtap="handleAddNote">+</view>
 </view>
+
+<not-login wx:else btn-class="btn-red" bind:update="updateLogin" />
 
 <view hidden="{{options.hiddenOptions}}" class="ripple fast {{ options.hiddenOption }} note-options__wrapper">
   <view class="note-options__mask" bindtap="handleCancel"></view>

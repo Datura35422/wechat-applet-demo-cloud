@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "note-card": "/components/noteCard/noteCard",
-    "tips-info": "/components/tipsInfo/tipsInfo"
+    "tips-info": "/components/tipsInfo/tipsInfo",
+    "not-login": "/components/notLogin/notLogin"
   }
 }

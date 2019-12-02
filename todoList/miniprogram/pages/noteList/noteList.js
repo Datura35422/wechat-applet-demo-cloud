@@ -17,7 +17,8 @@ Page({
         icon: '/assets/icons/edit.png',
         path: '/pages/note/note',
       }
-    ]
+    ],
+    isLogin: false
   },
 
   customData: {
@@ -29,6 +30,9 @@ Page({
 
   onLoad() {
     if (app.globalData.openid !== '') {
+      this.setData({
+        isLogin: true
+      })
       this.onQuery(1, {})
     }
   },
@@ -130,4 +134,9 @@ Page({
         break
     }
   },
+  updateLogin() {
+    this.setData({
+      isLogin: true
+    })
+  }
 })

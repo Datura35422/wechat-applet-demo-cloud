@@ -28,6 +28,7 @@ const showModal = ({ title, content, confirmText = '确定', success, fail }) =>
     },
     fail() {
       fail && fail()
+      success && success.cancel && success.cancel()
     }
   })
 }

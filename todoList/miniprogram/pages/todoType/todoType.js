@@ -1,6 +1,7 @@
 
 Page({
   data: {
+    delay: true,
     typeItem: [
       {
         index: 0,

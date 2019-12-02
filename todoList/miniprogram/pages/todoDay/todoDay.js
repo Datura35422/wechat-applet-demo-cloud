@@ -127,9 +127,6 @@ Page({
         cancel() {
           _this.customData.isLock = false
         }
-      },
-      fail() {
-        _this.customData.isLock = false
       }
     })
   },

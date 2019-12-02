@@ -32,6 +32,9 @@ Component({
         success: {
           confirm() {
             _this.onDelTodo(_id)
+          },
+          cancel() {
+            customData.isLock = false
           }
         }
       })

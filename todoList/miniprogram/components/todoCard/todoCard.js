@@ -67,9 +67,6 @@ Component({
           cancel() {
             customData.isLock = false
           }
-        },
-        fail() {
-          customData.isLock = false
         }
       })
     },

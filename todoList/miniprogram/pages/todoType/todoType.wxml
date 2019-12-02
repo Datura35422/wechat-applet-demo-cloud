@@ -1,8 +1,9 @@
 <view class="container">
   <view 
     wx:for="{{typeItem}}" 
-    wx:key="{{item.index}}" 
-    class="type-item {{item.type}}"
+    wx:key="{{item.index}}"
+    class="ripple fast fadeInRight type-item {{item.type}}"
+    style="animation-delay: {{ delay ? index * 0.1 : 0 }}s"
     data-path="{{item.path}}"
     bindtap="toPath"
   >{{item.name}}</view>

@@ -1,13 +1,13 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
-    <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
-    <view bindtap="onGetOpenid">{{openid ? 'openid:' + openid : '未登录'}}</view>
-  </view>
   <view class="menu-container">
-    <view class="ripple {{animation.one}} menu-item menu-one">一</view>
-    <view class="ripple {{animation.two}} menu-item menu-two">二</view>
-    <view class="ripple {{animation.three}} menu-item menu-three">三</view>
-    <view class="ripple {{animation.four}} menu-item menu-four">四</view>
+    <view
+      wx:for="{{ menus }}"
+      wx:key="{{ index }}"
+      class="ripple fast {{ item.animation }} menu-item {{ item.className }}"
+      style="animation-delay: {{ delay ? index * 0.2 : 0 }}s"
+    >
+      {{ item.content }}
+    </view>
   </view>
 </view>
