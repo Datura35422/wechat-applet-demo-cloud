@@ -30,7 +30,10 @@ page {
   width: 40%;
   line-height: 200rpx;
   text-align: center;
-  
+}
+
+.menu-hover {
+  margin: -6rpx 6rpx 0 0;
 }
 
 .menu-one {

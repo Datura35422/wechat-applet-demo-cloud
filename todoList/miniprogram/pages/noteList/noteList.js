@@ -16,9 +16,20 @@ Page({
         key: 'upload',
         icon: '/assets/icons/edit.png',
         path: '/pages/note/note',
+        style: 'transform: scale(.5) translate3d(380rpx, 280rpx, 0);animation: showIn .3s ease-in forwards;'
+      },
+      {
+        key: 'cancel',
+        icon: '/assets/icons/cancel@gray.png',
+        path: '/pages/note/note',
+        style: 'transform: scale(.5) translate3d(-380rpx, 280rpx, 0);animation: showIn .3s ease-in forwards;'
       }
     ],
-    isLogin: false
+    isLogin: false,
+    addBtn: {
+      isAdd: false,
+      btnAnimation: ''
+    }
   },
 
   customData: {
@@ -43,6 +54,12 @@ Page({
       return
     }
     this.onQuery(this.customData.currentPage, {})
+    this.data.addBtn.btnAnimation && this.setData({
+      addBtn: {
+        isAdd: false,
+        btnAnimation: ''
+      }
+    })
   },
 
   onReachBottom() {
@@ -66,7 +83,6 @@ Page({
         wx.hideNavigationBarLoading()
       }
     }).then(res => {
-      console.log(res)
       const { data } = res
       this.setData({
         notes: page === 1 ? data : Array.from(new Set(this.data.notes.concat(data))), // 去重
@@ -80,31 +96,37 @@ Page({
   },
 
   handleAddNote() {
-    wx.navigateTo({
-      url: '/pages/note/note'
-    })
-    // this.hiddenOption(false)
+    if (!this.data.addBtn.isAdd) {
+      this.hiddenOption(false, { btnAnimation: `btn-animation` })
+    } else {
+      this.handleCancel()
+    }
   },
 
   handleCancel() {
-    this.hiddenOption(true, 'bounceOutDown')
+    this.hiddenOption(true, { optionAnimation: 'bounceOutDown', btnAnimation: 'btn-animation-out' })
   },
 
   toPage(e) {
     const _this = this
     const path = e.currentTarget.dataset.path
+    const toPageAnimation = 'bounceOutLeft'
     wx.navigateTo({
       url: path,
       success() {
-        _this.hiddenOption(true, 'bounceOutLeft')
+        _this.hiddenOption(true, { optionAnimation: toPageAnimation, btnAnimation: `ripple fast ${toPageAnimation}`})
       }
     })
   },
 
-  hiddenOption(opt, animation) {
+  hiddenOption(opt, { optionAnimation, btnAnimation }) {
     if (opt) {
       this.setData({
-        [`options.hiddenOption`]: animation
+        [`options.hiddenOption`]: optionAnimation,
+        addBtn: {
+          isAdd: false,
+          btnAnimation: btnAnimation
+        }
       }, () => {
         const optTimer = setTimeout(() => {
           this.setData({
@@ -117,7 +139,11 @@ Page({
       this.setData({
         options: {
           hiddenOptions: opt,
-          hiddenOption: animation ? animation : ''
+          hiddenOption: optionAnimation ? optionAnimation : ''
+        },
+        addBtn: {
+          isAdd: true,
+          btnAnimation: btnAnimation
         }
       })
     }

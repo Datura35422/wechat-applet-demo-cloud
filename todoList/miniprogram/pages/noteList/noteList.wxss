@@ -39,3 +39,32 @@
   height: 64rpx;
 }
 
+.btn-add {
+  z-index: 999;
+}
+
+.btn-animation {
+  transform: rotate(0);
+  animation: spin .3s ease-in .1s forwards;
+}
+@keyframes spin{
+  100% { transform: rotate(-45deg); }
+}
+
+.btn-animation-out {
+  transform: rotate(-45deg);
+  animation: spinOut .3s ease-in forwards;
+}
+@keyframes spinOut{
+  100% { transform: rotate(0); }
+}
+
+@keyframes showIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}

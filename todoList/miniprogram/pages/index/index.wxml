@@ -1,13 +1,21 @@
-<!--index.wxml-->
 <view class="container">
   <view class="menu-container">
-    <view
-      wx:for="{{ menus }}"
-      wx:key="{{ index }}"
-      class="ripple fast {{ item.animation }} menu-item {{ item.className }}"
-      style="animation-delay: {{ delay ? index * 0.2 : 0 }}s"
-    >
-      {{ item.content }}
-    </view>
+    <block wx:for="{{ menus }}" wx:key="{{ index }}">
+      <navigator 
+        wx:if="{{ item.url }}" 
+        class="ripple fast {{ item.animation }} menu-item {{ item.className }}"
+        style="animation-delay: {{ delay ? index * 0.2 : 0 }}s" 
+        hover-class="menu-hover"
+        url="{{ item.url }}"
+        open-type="{{ item.openType ? item.openType : 'navigate' }}"
+      >{{ item.content }}</navigator>
+      <view 
+        wx:else
+        class="ripple fast {{ item.animation }} menu-item {{ item.className }}"
+        style="animation-delay: {{ delay ? index * 0.2 : 0 }}s"
+      >
+        {{ item.content }}
+      </view>
+    </block>
   </view>
 </view>

@@ -11,25 +11,23 @@
   <view class="ripple bounceIn" wx:if="{{ !notes.length }}">
     <tips-info text="还没有笔记哦，快去新建一个吧！"></tips-info>
   </view>
-  <view class="btn-add" bindtap="handleAddNote">+</view>
+  <view class="btn-add {{ addBtn.btnAnimation }}" bindtap="handleAddNote">+</view>
 </view>
 
 <not-login wx:else btn-class="btn-red" bind:update="updateLogin" />
 
-<view hidden="{{options.hiddenOptions}}" class="ripple fast {{ options.hiddenOption }} note-options__wrapper">
+<view hidden="{{ options.hiddenOptions }}" class="ripple fast {{ options.hiddenOption }} note-options__wrapper">
   <view class="note-options__mask" bindtap="handleCancel"></view>
   <view class="note-options">
     <view 
-      wx:for="{{nextPages}}" 
-      wx:key="{{item.key}}" 
-      data-path="{{item.path}}" 
-      class="ripple fast bounceInUp note-option"
+      wx:for="{{ nextPages }}" 
+      wx:key="{{ item.key }}" 
+      data-path="{{ item.path }}" 
+      class="note-option"
+      style="{{ item.style }}"
       bindtap="toPage"
     >
-      <image class="icon-option" src="{{item.icon}}"></image>
-    </view>
-    <view class="ripple fast bounceInUp note-option" bindtap="handleCancel">
-      <image class="icon-option" src="/assets/icons/cancel@gray.png"></image>
+      <image class="icon-option" src="{{ item.icon }}"></image>
     </view>
   </view>
 </view>

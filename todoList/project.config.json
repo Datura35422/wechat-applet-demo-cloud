@@ -55,8 +55,8 @@
 				},
 				{
 					"id": 1,
-					"name": "pages/my/my",
-					"pathName": "pages/my/my",
+					"name": "pages/noteList/noteList",
+					"pathName": "pages/noteList/noteList",
 					"query": "",
 					"scene": null
 				},

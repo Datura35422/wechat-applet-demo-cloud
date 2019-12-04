@@ -9,12 +9,16 @@ Page({
       {
         className: 'menu-one',
         animation: 'fadeInDown',
-        content: '1'
+        content: 'TODO',
+        url: '/pages/todoType/todoType',
+        openType: 'switchTab' // 'navigate'
       },
       {
         className: 'menu-two',
         animation: 'fadeInRight',
-        content: '2'
+        content: 'NOTE',
+        url: '/pages/noteList/noteList',
+        openType: 'switchTab'
       },
       {
         className: 'menu-three',
