@@ -1,0 +1,36 @@
+{
+    "name": "backend-todo",
+    "version": "1.0.0",
+    "description": "todoList 云开发小程序后台",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start:dev": "nodemon --inspect-brk",
+        "start:prod": "node app.js"
+    },
+    "_moduleAliases": {
+        "@": ".",
+        "@core": "core",
+        "@app": "app",
+        "@services": "app/services",
+        "@models": "app/models",
+        "@validators": "app/validators/validator",
+        "@middlewares": "middlewares"
+    },
+    "author": "wangwei",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.19.0",
+        "basic-auth": "^2.0.1",
+        "bcryptjs": "^2.4.3",
+        "eslint": "^6.7.2",
+        "jsonwebtoken": "^8.5.1",
+        "koa": "^2.11.0",
+        "koa-bodyparser": "^4.2.1",
+        "koa-logger": "^3.2.1",
+        "koa-router": "^7.4.0",
+        "module-alias": "^2.2.2",
+        "require-directory": "^2.1.1",
+        "validator": "^12.1.0"
+    }
+}
