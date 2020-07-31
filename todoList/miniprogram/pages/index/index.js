@@ -23,7 +23,9 @@ Page({
       {
         className: 'menu-three',
         animation: 'fadeInUp',
-        content: '3'
+        content: 'ANIMATION',
+        url: '/pages/animations/animationTypes/animationTypes',
+        openType: 'navigateTo'
       },
       {
         className: 'menu-four',
@@ -31,8 +33,5 @@ Page({
         content: '4'
       }
     ]
-  },
-
-  
-
+  }
 })

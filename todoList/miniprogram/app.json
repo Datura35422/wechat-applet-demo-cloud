@@ -9,7 +9,10 @@
     "pages/todoMonth/todoMonth",
     "pages/todoWeek/todoWeek",
     "pages/noteDetail/noteDetail",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/animations/animationTypes/animationTypes",
+    "pages/animations/canvas/canvas",
+    "pages/animations/hexagon/hexagon"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

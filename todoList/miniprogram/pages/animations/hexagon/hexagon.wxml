@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="hex"></view>
+  <view class="hex-horizontal"></view>
+  <view class="hexagon-wrap" style="{{ hexagonStyle.wrap }}">
+    <hexagon class="hexagon-contour" style="{{ hexagonPosition.topLeft }}" items="{{ hexagonItem }}" sidesize="{{ hexagonItemSize.sideSize }}" imgsize="{{ hexagonItemSize.imgSize }}">
+      <image class="img" src="/assets/icons/cancel.png"></image>
+    </hexagon>
+    <hexagon class="hexagon-contour" style="{{ hexagonPosition.topRight }}" items="{{ hexagonItem }}" sidesize="{{ hexagonItemSize.sideSize }}" imgsize="{{ hexagonItemSize.imgSize }}">
+      <image class="img" src="/assets/icons/cancel.png"></image>
+    </hexagon>
+    <hexagon class="hexagon-contour hexagon-center" style="{{ hexagonPosition.centerLeft }}" items="{{ hexagonItem }}" sidesize="{{ hexagonItemSize.sideSize }}" imgsize="{{ hexagonItemSize.imgSize }}">
+      <image class="img" src="/assets/icons/cancel.png"></image>
+    </hexagon>
+    <image class="img" src="/assets/icons/cancel.png"></image>
+    <hexagon class="hexagon-contour hexagon-center" style="{{ hexagonPosition.centerRight }}" items="{{ hexagonItem }}" sidesize="{{ hexagonItemSize.sideSize }}" imgsize="{{ hexagonItemSize.imgSize }}">
+      <image class="img" src="/assets/icons/cancel.png"></image>
+    </hexagon>
+    <hexagon class="hexagon-contour" style="{{ hexagonPosition.bottomLeft }}" items="{{ hexagonItem }}" sidesize="{{ hexagonItemSize.sideSize }}" imgsize="{{ hexagonItemSize.imgSize }}">
+      <image class="img" src="/assets/icons/cancel.png"></image>
+    </hexagon>
+    <hexagon class="hexagon-contour" style="{{ hexagonPosition.bottomRight }}" items="{{ hexagonItem }}" sidesize="{{ hexagonItemSize.sideSize }}" imgsize="{{ hexagonItemSize.imgSize }}">
+      <image class="img" src="/assets/icons/cancel.png"></image>
+    </hexagon>
+  </view>
+  
+  <view class="triangle-wrap">
+    <view class="triangle"></view>
+  </view>
+</view>

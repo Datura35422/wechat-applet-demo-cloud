@@ -1,0 +1,18 @@
+<view class="container">
+  <view 
+    wx:for="{{ typeItem }}" 
+    wx:key="index"
+    class="ripple fast fadeInRight type-item {{ item.class }}"
+    style="animation-delay: {{ delay ? index * 0.1 : 0 }}s"
+    data-type="{{ item.type }}"
+    bind:tap="handleShow"
+  >{{ item.name }}</view>
+</view>
+<view class="modal-container" wx:if="{{ show.modal }}" bind:tap="handleModal">
+  <view class="star" wx:if="{{ show.star }}">
+    <image class="star-img" src="/assets/icons/star.png"></image>
+  </view>
+  <view wx:if="{{ show.spin }}" animation="{{ ani.spin }}">
+    ANIMATION
+  </view>
+</view>

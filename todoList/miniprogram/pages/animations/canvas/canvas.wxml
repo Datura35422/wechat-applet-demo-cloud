@@ -1,0 +1,6 @@
+<view class="container">
+  <view class="title">画布移动demo</view>
+  <canvas canvas-id="canvas" class="canvas" bindtouchstart="handleTouchStart"></canvas>
+  <canvas id="canvas2" class="canvas" type="2d"></canvas>
+  <canvas id="canvas3" class="canvas" type="webgl" bind:error="handleError"></canvas>
+</view>

@@ -1,0 +1,28 @@
+<view class="hexagon-wrap" style="{{ wrapStyle }}">
+  <!-- 上下两边顶端与中间顶端的差距 差半个边长 示例以80为边 中间的高度为 边的根号3倍 - 顶端的半径-->
+  <view class="hexagon-contour side" style="{{ sideStyle }}">
+    <view style="{{ imgStyle }}">
+      <image wx:if="{{ items.topLeft }}" class="img" style="{{ imgStyle }}" src="{{ items.topLeft }}"></image>
+    </view>
+    <view style="{{ imgStyle }}">
+      <image wx:if="{{ items.topRight }}" class="img" style="{{ imgStyle }}" src="{{ items.topRight }}"></image>
+    </view>
+  </view>
+  <view class="hexagon-contour center" style="{{ centerStyle }}">
+    <view style="{{ imgStyle }}">
+      <image wx:if="{{ items.centerLeft }}" class="img" style="{{ imgStyle }}" src="{{ items.centerLeft }}"></image>
+    </view>
+    <slot></slot>
+    <view style="{{ imgStyle }}">
+      <image wx:if="{{ items.centerRight }}" class="img" style="{{ imgStyle }}" src="{{ items.centerRight }}"></image>
+    </view>
+  </view>
+  <view class="hexagon-contour side" style="{{ sideStyle }}">
+    <view style="{{ imgStyle }}">
+      <image wx:if="{{ items.bottomLeft }}" class="img" style="{{ imgStyle }}" src="{{ items.bottomLeft }}"></image>
+    </view>
+    <view style="{{ imgStyle }}">
+      <image wx:if="{{ items.bottomRight }}" class="img" style="{{ imgStyle }}" src="{{ items.bottomRight }}"></image>
+    </view>
+  </view>
+</view>

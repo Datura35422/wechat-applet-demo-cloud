@@ -1,6 +1,6 @@
 <view class="container">
   <view class="menu-container">
-    <block wx:for="{{ menus }}" wx:key="{{ index }}">
+    <block wx:for="{{ menus }}" wx:key="index">
       <navigator 
         wx:if="{{ item.url }}" 
         class="ripple fast {{ item.animation }} menu-item {{ item.className }}"

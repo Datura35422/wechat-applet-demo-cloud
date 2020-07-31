@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "hexagon": "/components/hexagon/hexagon"
+  }
+}
